@@ -3,1028 +3,224 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosegi - CyberSentinel | Cybersécurité Comportementale IA</title>
+    <title>Politique de Confidentialité – Cosegi</title>
     <style>
-        /* --- Variables et Configuration --- */
         :root {
             --color-primary: #0066cc;
-            --color-primary-dark: #004a99;
-            --color-secondary: #00d4ff;
+            --color-secondary: #00b8ff;
             --color-dark: #0a0e27;
-            --color-gray-dark: #1a1f3a;
             --color-gray: #6b7280;
-            --color-light: #f8fafc;
+            --color-light: #f9fafb;
             --color-white: #ffffff;
-            --color-success: #10b981;
-            --color-warning: #f59e0b;
-            --color-danger: #ef4444;
-            --gradient-primary: linear-gradient(135deg, #0066cc 0%, #004a99 100%);
-            --gradient-secondary: linear-gradient(135deg, #00d4ff 0%, #0066cc 100%);
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
             --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-            --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
-            --shadow-xl: 0 20px 50px rgba(0,0,0,0.15);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --transition: all 0.3s ease;
         }
 
-        * {
-            box-sizing: border-box;
+        body {
+            font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            color: var(--color-dark);
+            background: var(--color-light);
+            line-height: 1.7;
             margin: 0;
             padding: 0;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
-            line-height: 1.6;
-            color: var(--color-dark);
-            background: var(--color-white);
-            overflow-x: hidden;
-        }
-
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 24px;
-        }
-
-        /* --- Header & Navigation --- */
         header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
-        }
-
-        header.scrolled {
-            box-shadow: var(--shadow-md);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 24px;
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--color-primary);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .logo:hover {
-            transform: translateY(-2px);
-        }
-
-        .logo-divider {
-            margin: 0 12px;
-            color: var(--color-gray);
-            font-weight: 300;
-        }
-
-        .logo-product {
-            color: var(--color-dark);
-            font-weight: 600;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            align-items: center;
-            gap: 32px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--color-dark);
-            font-weight: 500;
-            font-size: 15px;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        nav a:not(.btn-primary)::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--color-primary);
-            transition: var(--transition);
-        }
-
-        nav a:not(.btn-primary):hover::after {
-            width: 100%;
-        }
-
-        nav a:not(.btn-primary):hover {
-            color: var(--color-primary);
-        }
-
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: var(--color-white);
-            padding: 12px 28px;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: var(--transition);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 8px;
-        }
-
-        .mobile-menu-btn span {
-            width: 25px;
-            height: 2px;
-            background: var(--color-dark);
-            transition: var(--transition);
-        }
-
-        /* --- Hero Section --- */
-        .hero {
-            padding: 140px 0 100px;
-            background: linear-gradient(180deg, var(--color-light) 0%, var(--color-white) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: -20%;
-            width: 60%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(0, 102, 204, 0.05) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--color-white);
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--color-primary);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 24px;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .hero h1 {
-            font-size: clamp(40px, 6vw, 64px);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            color: var(--color-dark);
-            animation: fadeInUp 0.6s ease-out 0.1s backwards;
-        }
-
-        .hero-gradient-text {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: clamp(18px, 2vw, 22px);
-            line-height: 1.7;
-            color: var(--color-gray);
-            margin-bottom: 40px;
-            animation: fadeInUp 0.6s ease-out 0.2s backwards;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.6s ease-out 0.3s backwards;
-        }
-
-        .btn-large {
-            padding: 16px 32px;
-            font-size: 16px;
-            border-radius: 10px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary-large {
-            background: var(--gradient-primary);
-            color: var(--color-white);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-primary-large:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-secondary-large {
-            background: var(--color-white);
-            color: var(--color-primary);
-            border: 2px solid var(--color-primary);
-        }
-
-        .btn-secondary-large:hover {
             background: var(--color-primary);
             color: var(--color-white);
-        }
-
-        /* --- Sections --- */
-        section {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .section-header {
             text-align: center;
-            max-width: 800px;
-            margin: 0 auto 60px;
-        }
-
-        .section-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
-            color: var(--color-primary);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .section-title {
-            font-size: clamp(32px, 4vw, 48px);
-            font-weight: 800;
-            margin-bottom: 16px;
-            color: var(--color-dark);
-            line-height: 1.2;
-        }
-
-        .section-description {
-            font-size: 18px;
-            color: var(--color-gray);
-            line-height: 1.7;
-        }
-
-        /* --- Problem Solution Grid --- */
-        .problem-solution-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            margin-top: 60px;
-        }
-
-        .ps-card {
-            background: var(--color-white);
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .ps-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .ps-card-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            margin-bottom: 24px;
-        }
-
-        .ps-card-problem .ps-card-icon {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
-        }
-
-        .ps-card-solution .ps-card-icon {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
-        }
-
-        .ps-card h3 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .ps-card-problem h3 { color: var(--color-danger); }
-        .ps-card-solution h3 { color: var(--color-success); }
-
-        .ps-card ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .ps-card li {
-            padding: 12px 0;
-            padding-left: 32px;
-            position: relative;
-            font-size: 16px;
-            color: var(--color-gray);
-            line-height: 1.6;
-        }
-
-        .ps-card li::before {
-            position: absolute;
-            left: 0;
-            font-size: 18px;
-        }
-
-        .ps-card-problem li::before { content: '❌'; }
-        .ps-card-solution li::before { content: '✅'; }
-
-        /* --- Alert Demo --- */
-        .alert-demo-container {
-            display: grid;
-            gap: 16px;
-            margin-top: 32px;
-        }
-
-        .alert-demo {
-            padding: 20px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .alert-demo:hover {
-            transform: translateX(8px);
-        }
-
-        .alert-legit {
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-            border-left: 4px solid var(--color-success);
-            color: #065f46;
-        }
-
-        .alert-suspect {
-            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-            border-left: 4px solid var(--color-warning);
-            color: #92400e;
-        }
-
-        .alert-danger {
-            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-            border-left: 4px solid var(--color-danger);
-            color: #991b1b;
-        }
-
-        /* --- Features Grid --- */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-            margin-top: 60px;
-        }
-
-        .feature-card {
-            background: var(--color-white);
-            padding: 40px 32px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
+            padding: 60px 20px 80px;
             position: relative;
             overflow: hidden;
         }
 
-        .feature-card::before {
-            content: '';
+        header::after {
+            content: "";
             position: absolute;
             top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gradient-primary);
-            transform: scaleX(0);
-            transition: var(--transition);
+            right: -100px;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(255,255,255,0.2), transparent 70%);
+            animation: float 8s ease-in-out infinite;
         }
 
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(20px); }
         }
 
-        .feature-card:hover::before {
-            transform: scaleX(1);
+        header h1 {
+            font-size: clamp(32px, 5vw, 52px);
+            font-weight: 800;
+            margin-bottom: 10px;
         }
 
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            margin-bottom: 20px;
+        header p {
+            font-size: 18px;
+            color: rgba(255,255,255,0.9);
         }
 
-        .feature-card h3 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--color-dark);
-        }
-
-        .feature-card p {
-            color: var(--color-gray);
-            line-height: 1.7;
-        }
-
-        /* --- Architecture Flow --- */
-        .architecture-flow {
+        main {
             max-width: 900px;
-            margin: 60px auto 0;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .flow-item {
             background: var(--color-white);
-            padding: 32px;
-            border-radius: 16px;
+            margin: -60px auto 60px;
+            padding: 60px 40px;
+            border-radius: 20px;
             box-shadow: var(--shadow-md);
-            border: 2px solid rgba(0, 102, 204, 0.1);
-            transition: var(--transition);
-            position: relative;
         }
 
-        .flow-item:hover {
-            border-color: var(--color-primary);
-            transform: translateX(8px);
-        }
-
-        .flow-item-core {
-            background: var(--gradient-primary);
-            color: var(--color-white);
-            border-color: transparent;
-        }
-
-        .flow-item h4 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .flow-arrow {
-            text-align: center;
-            font-size: 32px;
+        h2 {
+            font-size: 24px;
             color: var(--color-primary);
+            margin-top: 40px;
+            border-left: 4px solid var(--color-secondary);
+            padding-left: 12px;
         }
 
-        /* --- Stats Grid --- */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 32px;
-            margin-top: 60px;
+        h3 {
+            font-size: 20px;
+            color: var(--color-dark);
+            margin-top: 30px;
         }
 
-        .stat-card {
-            background: var(--color-white);
-            padding: 40px 32px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .stat-number {
-            font-size: 48px;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
+        p, li {
             font-size: 16px;
             color: var(--color-gray);
-            font-weight: 600;
         }
 
-        .stat-description {
-            font-size: 14px;
-            color: var(--color-gray);
-            margin-top: 12px;
-            line-height: 1.6;
+        ul {
+            list-style: none;
+            padding-left: 0;
         }
 
-        /* --- Technical Summary --- */
-        .tech-summary {
-            max-width: 1000px;
-            margin: 60px auto 0;
-            background: var(--color-white);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-xl);
-        }
-
-        .tech-summary-header {
-            background: var(--gradient-primary);
-            color: var(--color-white);
-            padding: 32px 40px;
-            text-align: center;
-        }
-
-        .tech-summary-header h3 {
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        .tech-summary-body {
-            padding: 0;
-        }
-
-        .tech-row {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .tech-row:last-child {
-            border-bottom: none;
-        }
-
-        .tech-label {
-            padding: 24px 40px;
-            background: rgba(0, 102, 204, 0.03);
-            font-weight: 700;
-            color: var(--color-dark);
-            display: flex;
-            align-items: center;
-        }
-
-        .tech-value {
-            padding: 24px 40px;
-            color: var(--color-gray);
-            display: flex;
-            align-items: center;
-        }
-
-        /* --- Roadmap --- */
-        .roadmap-grid {
-            display: grid;
-            gap: 20px;
-            max-width: 1000px;
-            margin: 60px auto 0;
-        }
-
-        .roadmap-item {
-            background: var(--color-white);
-            padding: 32px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            display: flex;
-            align-items: flex-start;
-            gap: 24px;
-            transition: var(--transition);
-            border-left: 4px solid var(--color-primary);
-        }
-
-        .roadmap-item:hover {
-            transform: translateX(8px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .roadmap-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            flex-shrink: 0;
-        }
-
-        .roadmap-content h4 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--color-dark);
-        }
-
-        .roadmap-content p {
-            color: var(--color-gray);
-            line-height: 1.6;
-        }
-
-        /* --- CTA Section --- */
-        .cta-section {
-            background: var(--gradient-primary);
-            color: var(--color-white);
-            padding: 100px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: pulse 15s ease-in-out infinite;
-        }
-
-        .cta-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .cta-section .section-title {
-            color: var(--color-white);
-            margin-bottom: 20px;
-        }
-
-        .cta-section .section-description {
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 40px;
-        }
-
-        .cta-section .btn-large {
-            background: var(--color-white);
+        ul li::before {
+            content: "• ";
             color: var(--color-primary);
         }
 
-        .cta-section .btn-large:hover {
-            transform: translateY(-3px) scale(1.05);
+        a {
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: var(--transition);
         }
 
-        /* --- Footer --- */
+        a:hover {
+            text-decoration: underline;
+        }
+
         footer {
             background: var(--color-dark);
-            color: rgba(255, 255, 255, 0.7);
-            padding: 60px 0 30px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-brand {
-            grid-column: span 1;
-        }
-
-        .footer-logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--color-white);
-            margin-bottom: 16px;
-        }
-
-        .footer-tagline {
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .footer-section h4 {
-            color: var(--color-white);
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            color: var(--color-white);
-        }
-
-        .footer-bottom {
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255,255,255,0.7);
             text-align: center;
+            padding: 40px 20px;
             font-size: 14px;
         }
 
-        /* --- Animations --- */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        footer a {
+            color: var(--color-secondary);
+            text-decoration: none;
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        footer a:hover {
+            text-decoration: underline;
         }
 
-        /* --- Responsive Design --- */
-        @media (max-width: 1024px) {
-            .tech-row {
-                grid-template-columns: 200px 1fr;
-            }
-        }
-
-        @media (max-width: 400px) {
-            .nav-container {
-                padding: 16px 24px;
-            }
-
-            nav {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                background: var(--color-white);
-                box-shadow: var(--shadow-lg);
-                transition: var(--transition);
-                padding: 24px;
-            }
-
-            nav.active {
-                left: 0;
-            }
-
-            nav ul {
-                flex-direction: column;
-                gap: 20px;
-                align-items: flex-start;
-            }
-
-            .mobile-menu-btn {
-                display: flex;
-            }
-
-            .hero {
-                padding: 100px 0 60px;
-            }
-
-            section {
-                padding: 60px 0;
-            }
-
-            .hero-cta {
-                flex-direction: column;
-            }
-
-            .btn-large {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .problem-solution-grid,
-            .features-grid,
-            .stats-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .tech-row {
-                grid-template-columns: 1fr;
-            }
-
-            .tech-label,
-            .tech-value {
-                padding: 16px 24px;
-            }
-
-            .tech-label {
-                background: rgba(0, 102, 204, 0.05);
-            }
-
-            .roadmap-item {
-                flex-direction: column;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 16px;
-            }
-
-            .hero h1 {
-                font-size: 32px;
-            }
-
-            .section-title {
-                font-size: 28px;
-            }
-
-            .ps-card,
-            .feature-card,
-            .stat-card,
-            .roadmap-item {
-                padding: 24px;
+        @media (max-width: 600px) {
+            main {
+                padding: 40px 20px;
             }
         }
     </style>
 </head>
 <body>
-<header id="header">
-        <div class="nav-container">
-            <a href="#" class="logo">
-                Cosegi<span class="logo-divider">/</span><span class="logo-product">CyberSentinel</span>
-            </a>
-            <nav id="nav">
-                <ul>
-                    <li><a href="#vision">Vision</a></li>
-                    <li><a href="#fonctionnement">Fonctionnement</a></li>
-                    <li><a href="#confidentialite">Confidentialité</a></li>
-                    <li><a href="#evolutions">Évolutions</a></li>
-                    <li><a href="#contact" class="btn-primary">Demander une démo</a></li>
-                </ul>
-            </nav>
-            <div class="mobile-menu-btn" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </div>
+    <header>
+        <h1>Politique de Confidentialité</h1>
+        <p>Conformément au Règlement Général sur la Protection des Données (RGPD)</p>
     </header>
-<h1>Politique de confidentialité et RGPD – Cosegi</h1>
 
-<p>La société <strong>Cosegi</strong> (ci-après « nous » ou « Cosegi ») attache une grande importance à la protection de vos données personnelles. La présente politique de confidentialité explique comment nous traitons les informations que vous pouvez nous transmettre via notre site <strong>CyberSentinel</strong> (<a href="https://www.cosegi.be">www.cosegi.be</a>) et vos droits conformément au Règlement Général sur la Protection des Données (RGPD, Règlement UE 2016/679).</p>
+    <main>
+        <p>
+            La société <strong>Cosegi</strong> (ci-après « nous » ou « Cosegi ») attache une grande importance à la protection de vos données personnelles.
+            La présente politique de confidentialité explique comment nous traitons les informations que vous pouvez nous transmettre via notre site
+            <strong>CyberSentinel</strong> (<a href="https://www.cosegi.be">www.cosegi.be</a>) et vos droits conformément au RGPD (Règlement UE 2016/679).
+        </p>
 
-<h2>1. Responsable du traitement</h2>
-<p>Le responsable du traitement de vos données est :</p>
-<p>
-<strong>Cosegi</strong><br>
-Adresse : [Adresse complète de Cosegi]<br>
-Email : [contact@cosegi.be]<br>
-Téléphone : [Numéro de téléphone]
-</p>
+        <h2>1. Responsable du traitement</h2>
+        <p>
+            <strong>Cosegi</strong><br>
+            Adresse : [Adresse complète de Cosegi]<br>
+            Email : <a href="mailto:contact@cosegi.be">contact@cosegi.be</a><br>
+            Téléphone : [Numéro de téléphone]
+        </p>
 
-<h2>2. Données collectées</h2>
-<p>Nous ne collectons aucune donnée personnelle automatiquement lors de votre visite sur le site. Les seules données collectées sont celles que vous nous fournissez volontairement via le formulaire de contact :</p>
-<ul>
-  <li>Nom et prénom</li>
-  <li>Adresse email</li>
-  <li>Message transmis</li>
-</ul>
+        <h2>2. Données collectées</h2>
+        <p>
+            Nous ne collectons aucune donnée personnelle automatiquement lors de votre visite sur le site.
+            Les seules données collectées sont celles que vous nous fournissez volontairement via le formulaire de contact :
+        </p>
+        <ul>
+            <li>Nom et prénom</li>
+            <li>Adresse email</li>
+            <li>Message transmis</li>
+        </ul>
 
-<h2>3. Finalité et base légale du traitement</h2>
-<p>Les données que vous nous communiquez via le formulaire sont utilisées uniquement pour :</p>
-<ul>
-  <li>Répondre à vos demandes et questions.</li>
-  <li>Vous envoyer des informations ou mises à jour si vous en avez fait la demande.</li>
-</ul>
-<p>La base légale de ce traitement est le <strong>consentement explicite</strong> que vous nous donnez en remplissant le formulaire.</p>
+        <h2>3. Finalité et base légale du traitement</h2>
+        <p>
+            Les données que vous nous communiquez via le formulaire sont utilisées uniquement pour :
+        </p>
+        <ul>
+            <li>Répondre à vos demandes et questions.</li>
+            <li>Vous envoyer des informations si vous en avez fait la demande.</li>
+        </ul>
+        <p>La base légale de ce traitement est le <strong>consentement explicite</strong> donné en remplissant le formulaire.</p>
 
-<h2>4. Durée de conservation</h2>
-<p>Nous conservons vos données personnelles uniquement le temps nécessaire pour répondre à votre demande. Elles sont supprimées ou anonymisées ensuite.</p>
+        <h2>4. Durée de conservation</h2>
+        <p>Nous conservons vos données uniquement le temps nécessaire pour répondre à votre demande. Elles sont ensuite supprimées ou anonymisées.</p>
 
-<h2>5. Partage des données</h2>
-<p>Nous ne partageons vos données personnelles avec aucun tiers, sauf obligation légale ou pour répondre à votre demande (par exemple, un prestataire technique intervenant pour le traitement du formulaire, strictement encadré).</p>
+        <h2>5. Partage des données</h2>
+        <p>
+            Nous ne partageons vos données avec aucun tiers, sauf obligation légale ou pour le traitement technique du formulaire (hébergement sur GitHub Pages et domaine OVH).
+            Ces prestataires respectent le RGPD.
+        </p>
 
-<h2>6. Sécurité</h2>
-<p>Nous mettons en œuvre des mesures techniques et organisationnelles appropriées pour protéger vos données contre toute perte, altération, accès non autorisé ou divulgation.</p>
+        <h2>6. Sécurité</h2>
+        <p>
+            Nous mettons en œuvre des mesures techniques et organisationnelles adaptées pour protéger vos données contre toute perte, altération ou accès non autorisé.
+        </p>
 
-<h2>7. Cookies et traceurs</h2>
-<p>Ce site n’utilise pas de cookies de suivi ou traceurs tiers. Seuls les cookies techniques nécessaires au fonctionnement du formulaire peuvent être utilisés, conformément à la législation.</p>
+        <h2>7. Cookies et traceurs</h2>
+        <p>
+            Ce site n’utilise pas de cookies de suivi ni d’outils analytiques tiers.
+            Seuls des cookies strictement nécessaires au fonctionnement du formulaire peuvent être utilisés.
+        </p>
 
-<h2>8. Vos droits</h2>
-<p>Conformément au RGPD, vous disposez des droits suivants :</p>
-<ul>
-  <li>Droit d’accès, de rectification et de suppression de vos données.</li>
-  <li>Droit de limitation du traitement ou d’opposition.</li>
-  <li>Droit à la portabilité des données.</li>
-  <li>Droit de retirer votre consentement à tout moment.</li>
-</ul>
-<p>Pour exercer vos droits, vous pouvez nous contacter à l’adresse : <a href="mailto:contact@cosegi.be">contact@cosegi.be</a>.</p>
+        <h2>8. Vos droits</h2>
+        <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+        <ul>
+            <li>Droit d’accès, de rectification et de suppression de vos données.</li>
+            <li>Droit de limitation ou d’opposition au traitement.</li>
+            <li>Droit à la portabilité des données.</li>
+            <li>Droit de retirer votre consentement à tout moment.</li>
+        </ul>
+        <p>Pour exercer vos droits, contactez-nous à : <a href="mailto:contact@cosegi.be">contact@cosegi.be</a></p>
 
-<h2>9. Réclamation</h2>
-<p>Si vous estimez que vos droits ne sont pas respectés, vous pouvez introduire une réclamation auprès de l’Autorité de protection des données (APD) en Belgique : <a href="https://www.gegevensbeschermingsautoriteit.be" target="_blank">www.gegevensbeschermingsautoriteit.be</a>.</p>
+        <h2>9. Réclamation</h2>
+        <p>
+            Si vous estimez que vos droits ne sont pas respectés, vous pouvez introduire une réclamation auprès de l’Autorité de protection des données (APD) en Belgique : 
+            <a href="https://www.gegevensbeschermingsautoriteit.be" target="_blank">www.gegevensbeschermingsautoriteit.be</a>.
+        </p>
 
-<h2>10. Modifications de la politique</h2>
-<p>Nous nous réservons le droit de mettre à jour cette politique de confidentialité. Toute modification sera publiée sur cette page avec la date de mise à jour.</p>
+        <h2>10. Modifications de la politique</h2>
+        <p>
+            Nous nous réservons le droit de mettre à jour cette politique. Toute modification sera publiée sur cette page avec la date de mise à jour.
+        </p>
 
-<p><em>Dernière mise à jour : 23 octobre 2025</em></p>
-   <footer>
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="footer-logo">Cosegi</div>
-                    <p class="footer-tagline">
-                        La cybersécurité prédictive et comportementale.<br>
-                        Protéger l'humain au cœur du numérique.
-                    </p>
-                </div>
-                <div class="footer-section">
-                    <h4>Solution</h4>
-                    <ul class="footer-links">
-                        <li><a href="#fonctionnement">Fonctionnement</a></li>
-                        <li><a href="#confidentialite">Confidentialité</a></li>
-                        <li><a href="#evolutions">Intégrations</a></li>
-                        <li><a href="#contact">Demander une démo</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Entreprise</h4>
-                    <ul class="footer-links">
-                        <li><a href="a-propos.html">À propos</a></li>
-                        <li><a href="#histoire">Histoire</a></li>
-                        <li><a href="#contact">Contact</a></li> </ul>
-                </div>
-                <div class="footer-section">
-                    <h4>Ressources</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        
-                        <li><a href="#">Support</a></li>
-                        <li><a href="#RGPD">Politique de confidentialité</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2025 Cosegi. Tous droits réservés.</p>
-            </div>
-        </div>
+        <p><em>Dernière mise à jour : 23 octobre 2025</em></p>
+    </main>
+
+    <footer>
+        <p>© 2025 Cosegi – Tous droits réservés • <a href="mailto:contact@cosegi.be">contact@cosegi.be</a></p>
     </footer>
 </body>
 </html>
