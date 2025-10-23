@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosegi - CyberSentinel | Cybersécurité Comportementale IA</title>
+    <style>
+        /* --- Réinitialisation et configuration générale --- */
+        :root {
+            --color-primary: #004a99; /* Bleu Cosegi (professionnel) */
+            --color-secondary: #007bff; /* Bleu plus vif pour les accents */
+            --color-dark: #222;
+            --color-light: #f9f9f9;
+            --color-text: #333;
+            --color-success: #28a745;
+            --color-warning: #ffc107;
+            --color-danger: #dc3545;
+            --box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            line-height: 1.7;
+            color: var(--color-text);
+            background-color: #ffffff;
+        }
+
+        /* --- Conteneur principal --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* --- En-tête et Navigation --- */
+        header {
+            background: #fff;
+            border-bottom: 1px solid #eee;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background-color: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+
+        header .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .logo span {
+            font-weight: 300;
+            color: var(--color-dark);
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+
+        nav li {
+            margin-left: 25px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--color-text);
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover, .nav-cta {
+            color: var(--color-secondary);
+        }
+
+        .nav-cta {
+            background: var(--color-primary);
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: background 0.3s, color 0.3s;
+        }
+
+        .nav-cta:hover {
+            background: var(--color-secondary);
+            color: #fff;
+        }
+
+        /* --- Section Hero (Vision) --- */
+        .hero {
+            background: var(--color-light);
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            color: var(--color-dark);
+            margin-bottom: 15px;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            color: var(--color-primary);
+            font-weight: 400;
+            margin-bottom: 30px;
+        }
+
+        .hero p {
+            font-size: 1.1rem;
+            max-width: 800px;
+            margin: 0 auto 30px auto;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--color-primary);
+            color: #fff;
+            padding: 15px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1rem;
+            transition: background 0.3s, transform 0.3s;
+        }
+
+        .btn:hover {
+            background: var(--color-secondary);
+            transform: translateY(-2px);
+        }
+
+        /* --- Sections de contenu --- */
+        section {
+            padding: 80px 0;
+        }
+
+        section:nth-child(even) {
+            background: var(--color-light);
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--color-primary);
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--color-text);
+            margin-bottom: 60px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* --- 2. Problème et Objectif --- */
+        .problem-solution {
+            display: flex;
+            gap: 40px;
+            align-items: flex-start;
+        }
+
+        .problem-solution > div {
+            flex: 1;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+        }
+
+        .problem-solution h3 {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+        }
+
+        .problem-solution .problem h3 {
+            color: var(--color-danger);
+        }
+
+        .problem-solution .solution h3 {
+            color: var(--color-success);
+        }
+
+        .problem-solution ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .problem-solution li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .problem-solution li::before {
+            content: '❌';
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+
+        .problem-solution .solution li::before {
+            content: '✅';
+        }
+
+        .alert-demo {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            font-weight: bold;
+            font-family: "Courier New", Courier, monospace;
+        }
+        .alert-legit { background: #e9f7ef; border-left: 5px solid var(--color-success); color: var(--color-success); }
+        .alert-suspect { background: #fff8e6; border-left: 5px solid var(--color-warning); color: #d9a200; }
+        .alert-danger { background: #fdeded; border-left: 5px solid var(--color-danger); color: var(--color-danger); }
+        .alert-legit::before { content: '🔒'; margin-right: 10px; }
+        .alert-suspect::before { content: '⚠️'; margin-right: 10px; }
+        .alert-danger::before { content: '🚨'; margin-right: 10px; }
+
+
+        /* --- 3. Fonctionnement Technique --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+            border-top: 4px solid var(--color-primary);
+        }
+
+        .feature-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--color-primary);
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        /* --- 4. Architecture --- */
+        .architecture-flow {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            font-family: "Courier New", Courier, monospace;
+        }
+
+        .flow-box {
+            background: #fff;
+            border: 2px solid var(--color-primary);
+            padding: 20px 30px;
+            border-radius: 8px;
+            text-align: center;
+            width: 80%;
+            max-width: 700px;
+            box-shadow: var(--box-shadow);
+        }
+        .flow-box-core {
+            background: var(--color-primary);
+            color: #fff;
+            border-color: var(--color-primary);
+        }
+        .flow-box-io {
+            background: var(--color-light);
+            border-style: dashed;
+        }
+        .flow-arrow {
+            font-size: 2rem;
+            color: var(--color-secondary);
+            font-weight: bold;
+        }
+
+        /* --- 5. Performance & Confidentialité --- */
+        .strengths-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .strength-card {
+            padding: 30px;
+            border-radius: 8px;
+            background: #fff;
+            box-shadow: var(--box-shadow);
+        }
+        
+        .strength-card h3 {
+            font-size: 1.6rem;
+            color: var(--color-primary);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .strength-card h3 .icon {
+            font-size: 2rem;
+            margin-right: 10px;
+        }
+        
+        .strength-card ul {
+            list-style: none;
+            padding-left: 0;
+        }
+        
+        .strength-card li {
+            position: relative;
+            padding-left: 25px;
+            margin-bottom: 10px;
+        }
+        
+        .strength-card li::before {
+            content: '✔';
+            position: absolute;
+            left: 0;
+            color: var(--color-success);
+            font-weight: bold;
+        }
+
+        .explain-box {
+            background: #222;
+            color: #eee;
+            padding: 20px;
+            border-radius: 5px;
+            font-family: "Courier New", Courier, monospace;
+            margin-top: 15px;
+        }
+        .explain-box span {
+            color: var(--color-danger);
+            font-weight: bold;
+        }
+
+        /* --- 6. Potentiel et Évolutions --- */
+        .roadmap-list {
+            list-style: none;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .roadmap-list li {
+            background: #fff;
+            box-shadow: var(--box-shadow);
+            margin-bottom: 15px;
+            padding: 20px 30px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        .roadmap-list .icon {
+            font-size: 1.5rem;
+            margin-right: 20px;
+            color: var(--color-primary);
+        }
+
+        /* --- Fiche Technique (Résumé) --- */
+        .summary-table {
+            background: #fff;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            max-width: 900px;
+            margin: 60px auto 0 auto;
+            box-shadow: var(--box-shadow);
+            overflow: hidden;
+        }
+        .summary-table h3 {
+            font-size: 1.5rem;
+            padding: 20px;
+            background: var(--color-light);
+            color: var(--color-primary);
+            border-bottom: 1px solid #ddd;
+        }
+        .summary-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .summary-table td {
+            padding: 15px 20px;
+            border-bottom: 1px solid #eee;
+        }
+        .summary-table tr:last-child td {
+            border-bottom: none;
+        }
+        .summary-table td:first-child {
+            font-weight: bold;
+            color: var(--color-dark);
+            width: 30%;
+        }
+
+        /* --- CTA Final --- */
+        .cta-section {
+            background: var(--color-primary);
+            color: #fff;
+            padding: 80px 0;
+            text-align: center;
+        }
+        .cta-section .section-title {
+            color: #fff;
+        }
+        .cta-section .section-subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            margin-bottom: 40px;
+        }
+        .cta-section .btn {
+            background: #fff;
+            color: var(--color-primary);
+        }
+        .cta-section .btn:hover {
+            background: #eee;
+            color: var(--color-primary);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--color-dark);
+            color: #aaa;
+            padding: 40px 0;
+            text-align: center;
+        }
+        footer p {
+            margin: 0;
+        }
+        footer .footer-logo {
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .strengths-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .problem-solution {
+                flex-direction: column;
+            }
+            .logo { font-size: 1.5rem; }
+            nav { display: none; } /* Simplification pour l'exemple */
+            .hero h1 { font-size: 2.5rem; }
+            .hero h2 { font-size: 1.2rem; }
+            .section-title { font-size: 2rem; }
+            .flow-box { width: 100%; }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="container">
+            <a href="#" class="logo">Cosegi <span>/ CyberSentinel</span></a>
+            <nav>
+                <ul>
+                    <li><a href="#vision">Vision</a></li>
+                    <li><a href="#fonctionnement">Fonctionnement</a></li>
+                    <li><a href="#confidentialite">Confidentialité</a></li>
+                    <li><a href="#evolutions">Évolutions</a></li>
+                    <li><a href="#contact" class="nav-cta">Demander une démo</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <section class="hero" id="vision">
+            <div class="container">
+                <h1>CyberSentinel</h1>
+                <h2>La cybersécurité prédictive et comportementale, par Cosegi.</h2>
+                <p>
+                    Plutôt que de se concentrer sur les failles techniques, CyberSentinel protège la couche la plus ciblée : <strong>l'humain</strong>.
+                    Nous protégeons vos utilisateurs au moment où ils agissent — là où les outils classiques échouent.
+                </p>
+                <a href="#contact" class="btn">Protéger mes équipes</a>
+            </div>
+        </section>
+
+        <section id="probleme">
+            <div class="container">
+                <h2 class="section-title">La fin de l'erreur humaine</h2>
+                <p class="section-subtitle">
+                    CyberSentinel intervient avant le clic de trop, en analysant et interprétant automatiquement les menaces que vos antivirus ne voient pas.
+                </p>
+
+                <div class="problem-solution">
+                    <div class="problem">
+                        <h3>❌ Le Problème</h3>
+                        <p>Près de 90% des cyberattaques réussies exploitent une erreur humaine via l'ingénierie sociale :</p>
+                        <ul>
+                            <li>Clic sur un lien de phishing.</li>
+                            <li>Ouverture d'un e-mail piégé.</li>
+                            <li>Téléchargement d'un fichier infecté.</li>
+                            <li>Réponse à une demande trompeuse.</li>
+                        </ul>
+                        <p style="margin-top: 15px;">Ces attaques contournent les pare-feux car elles manipulent la psychologie, pas seulement le code.</p>
+                    </div>
+
+                    <div class="solution">
+                        <h3>✅ Notre Objectif</h3>
+                        <p>Intervenir avant l'erreur en fournissant une prédiction en temps réel sur les e-mails et les sites web :</p>
+                        <div class="alert-demo alert-legit">Légitime</div>
+                        <div class="alert-demo alert-suspect">Suspect</div>
+                        <div class="alert-demo alert-danger">Frauduleux / Phishing</div>
+                        <p style="margin-top: 15px;">Nous alertons l'utilisateur immédiatement avec une explication claire du danger, lui permettant de prendre la bonne décision.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="fonctionnement">
+            <div class="container">
+                <h2 class="section-title">Comment ça marche ?</h2>
+                <p class="section-subtitle">
+                    CyberSentinel combine une analyse de bas niveau avec une intelligence artificielle de pointe pour une détection instantanée et précise.
+                </p>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="icon">🧠</div>
+                        <h3>Moteur d'IA Supervisé</h3>
+                        <p>
+                            Le cœur du système est un modèle de Machine Learning entraîné sur des millions de sites et d'e-mails légitimes et frauduleux. Il atteint jusqu'à <strong>99% de précision</strong> en validation.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">🔍</div>
+                        <h3>Analyse d'URLs</h3>
+                        <p>
+                            À chaque clic, l'URL est analysée (longueur, caractères suspects, redirections, âge du domaine, structure HTML). Ces données alimentent le modèle IA pour une prédiction instantanée.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">📧</div>
+                        <h3>Analyse d'E-mails</h3>
+                        <p>
+                            CyberSentinel lit les en-têtes (SPF, DKIM), le corps du message (recherche d'urgence, fautes, expressions typiques d'arnaques) et analyse tous les liens intégrés.
+                        </p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="icon">⚡</div>
+                        <h3>Notification Instantanée</h3>
+                        <p>
+                            En cas de menace, une alerte contextuelle indique le niveau de danger (faible, moyen, critique), le motif ("Domaine inconnu", "Lien déguisé") et la recommandation ("Ne pas cliquer").
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="architecture">
+            <div class="container">
+                <h2 class="section-title">Architecture "Privacy-by-Design"</h2>
+                <p class="section-subtitle">
+                    Notre architecture garantit que vos données ne quittent jamais votre machine. L'intégralité du traitement est effectuée localement.
+                </p>
+                
+                <div class="architecture-flow">
+                    <div class="flow-box flow-box-io">
+                        <strong>Interface Utilisateur</strong><br>
+                        (Plugin navigateur / client mail / terminal)
+                    </div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-box">
+                        <strong>Module d'analyse</strong> (Mails / URLs)
+                        <span style="float: right; font-size: 1.5rem; color: var(--color-secondary);">→</span>
+                        <strong>Extraction de caractéristiques</strong>
+                    </div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-box flow-box-core">
+                        <strong>Moteur IA (Machine Learning)</strong><br>
+                        Classification : Légitime / Suspect / Frauduleux
+                    </div>
+                    <div class="flow-arrow">⬇</div>
+                    <div class="flow-box flow-box-io">
+                        <strong>Module d'alerte / Journalisation (Logs)</strong>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="confidentialite">
+            <div class="container">
+                <h2 class="section-title">Nos Engagements</h2>
+                <p class="section-subtitle">
+                    Performance, confidentialité et transparence ne sont pas des options. Ce sont nos fondations.
+                </p>
+
+                <div class="strengths-grid">
+                    <div class="strength-card">
+                        <h3><span class="icon">📊</span>Performance</h3>
+                        <ul>
+                            <li><strong>Précision moyenne :</strong> ≈ 99%</li>
+                            <li><strong>Temps d'analyse :</strong> < 1 seconde</li>
+                            <li><strong>Optimisé hors ligne :</strong> Fonctionne sans latence cloud, assurant une protection constante.</li>
+                        </ul>
+                    </div>
+                    <div class="strength-card">
+                        <h3><span class="icon">🔐</span>Confidentialité</h3>
+                        <ul>
+                            <li><strong>Analyse 100% locale :</strong> Aucune donnée personnelle ni e-mail n'est envoyé à nos serveurs.</li>
+                            <li><strong>Privacy-by-Design :</strong> Le système est conçu pour ne jamais collecter d'informations identifiables.</li>
+                            <li><strong>Conformité RGPD :</strong> Respect total des principes du RGPD européen.</li>
+                        </ul>
+                    </div>
+                    <div class="strength-card">
+                        <h3><span class="icon">🧠</span>Explicabilité (XAI)</h3>
+                        <p>Chaque alerte est justifiée. Nous ne disons pas seulement "c'est dangereux", nous disons "pourquoi" :</p>
+                        <div class="explain-box">
+                            <strong>Alerte :</strong> Domaine frauduleux détecté.<br>
+                            <strong>Motif :</strong> "Le domaine <span>'paypal-verif.com'</span> est une imitation, créé récemment et non associé à PayPal."
+                        </div>
+                    </div>
+                </div>
+
+                <div class="summary-table">
+                    <h3>Fiche Technique - CyberSentinel</h3>
+                    <table>
+                        <tr>
+                            <td>Mission</td>
+                            <td>Protéger l'utilisateur contre les fraudes numériques par détection IA en temps réel.</td>
+                        </tr>
+                        <tr>
+                            <td>Données analysées</td>
+                            <td>URLs, e-mails (corps, en-têtes, liens)</td>
+                        </tr>
+                        <tr>
+                            <td>Méthode</td>
+                            <td>Machine Learning (Classification)</td>
+                        </tr>
+                        <tr>
+                            <td>Précision</td>
+                            <td>≈ 99 %</td>
+                        </tr>
+                        <tr>
+                            <td>Architecture</td>
+                            <td>Analyse locale, sans cloud, privacy-by-design</td>
+                        </tr>
+                        <tr>
+                            <td>Valeur ajoutée</td>
+                            <td>Protection comportementale, instantanée et explicable</td>
+                        </tr>
+                    </table>
+                </div>
+
+            </div>
+        </section>
+
+        <section id="evolutions">
+            <div class="container">
+                <h2 class="section-title">Un assistant de sécurité intelligent</h2>
+                <p class="section-subtitle">
+                    CyberSentinel est une plateforme conçue pour s'adapter et s'intégrer parfaitement à votre environnement numérique.
+                </p>
+                <ul class="roadmap-list">
+                    <li>
+                        <span class="icon">🌐</span>
+                        <strong>Extension Navigateur (Chrome, Firefox) :</strong> Détection en temps réel des sites visités avant même leur chargement.
+                    </li>
+                    <li>
+                        <span class="icon">✉️</span>
+                        <strong>Plugin Mail (Outlook, Gmail) :</strong> Alerte de phishing directement dans votre boîte de réception.
+                    </li>
+                    <li>
+                        <span class="icon">📱</span>
+                        <strong>Application Mobile (iOS/Android) :</strong> Filtrage des liens malveillants reçus par SMS, WhatsApp ou réseaux sociaux.
+                    </li>
+                    <li>
+                        <span class="icon">📈</span>
+                        <strong>Console Entreprise (SaaS) :</strong> Gestion centralisée de la sécurité comportementale de tous vos employés.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="cta-section" id="contact">
+            <div class="container">
+                <h2 class="section-title">Protégez votre couche humaine.</h2>
+                <p class="section-subtitle">
+                    Découvrez comment CyberSentinel par Cosegi peut bloquer les attaques que vos solutions actuelles manquent.
+                </p>
+                <a href="mailto:contact@cosegi.com" class="btn">Demander une démo</a>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">Cosegi</div>
+            <p>© 2025 Cosegi. Tous droits réservés.</p>
+            <p>La cybersécurité prédictive et comportementale.</p>
+        </div>
+    </footer>
+
+</body>
+</html>
