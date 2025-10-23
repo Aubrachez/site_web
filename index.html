@@ -107,6 +107,24 @@
             background: var(--color-light);
             padding: 100px 0;
             text-align: center;
+            position: relative; /* Pour positionner l'image */
+            overflow: hidden;
+        }
+
+        .hero img {
+            position: absolute;
+            bottom: -50px; /* Ajuster pour que l'image soit bien visible sans trop déborder */
+            right: 0;
+            width: 40%; /* Ajuster la taille de l'image */
+            max-width: 600px;
+            opacity: 0.8;
+            z-index: 1;
+            pointer-events: none; /* Empêche l'image de bloquer les interactions */
+        }
+
+        .hero .container {
+            position: relative;
+            z-index: 2; /* S'assurer que le texte est au-dessus de l'image */
         }
 
         .hero h1 {
@@ -236,6 +254,17 @@
         .alert-suspect::before { content: '⚠️'; margin-right: 10px; }
         .alert-danger::before { content: '🚨'; margin-right: 10px; }
 
+        .image-center {
+            text-align: center;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+        .image-center img {
+            max-width: 80%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: var(--box-shadow);
+        }
 
         /* --- 3. Fonctionnement Technique --- */
         .features-grid {
@@ -458,6 +487,10 @@
             .strengths-grid {
                 grid-template-columns: 1fr;
             }
+            .hero img {
+                width: 60%;
+                right: -10%;
+            }
         }
 
         @media (max-width: 768px) {
@@ -470,6 +503,9 @@
             .hero h2 { font-size: 1.2rem; }
             .section-title { font-size: 2rem; }
             .flow-box { width: 100%; }
+            .hero img {
+                display: none; /* Masquer l'image sur les petits écrans */
+            }
         }
 
     </style>
@@ -503,6 +539,10 @@
                 </p>
                 <a href="#contact" class="btn">Protéger mes équipes</a>
             </div>
+            <div class="image-overlay">
+                
+`
+            </div>
         </section>
 
         <section id="probleme">
@@ -534,6 +574,10 @@
                         <p style="margin-top: 15px;">Nous alertons l'utilisateur immédiatement avec une explication claire du danger, lui permettant de prendre la bonne décision.</p>
                     </div>
                 </div>
+                <div class="image-center">
+                    
+`
+                </div>
             </div>
         </section>
 
@@ -563,7 +607,7 @@
                         <div class="icon">📧</div>
                         <h3>Analyse d'E-mails</h3>
                         <p>
-                            CyberSentinel lit les en-têtes (SPF, DKIM), le corps du message (recherche d'urgence, fautes, expressions typiques d'arnaques) et analyse tous les liens intégrés.
+                            Pour les e-mails, CyberSentinel lit les en-têtes (SPF, DKIM), le corps du message (recherche d'urgence, fautes, expressions typiques d'arnaques) et analyse tous les liens intégrés.
                         </p>
                     </div>
                     <div class="feature-card">
@@ -604,6 +648,10 @@
                     <div class="flow-box flow-box-io">
                         <strong>Module d'alerte / Journalisation (Logs)</strong>
                     </div>
+                </div>
+                <div class="image-center">
+                    
+`
                 </div>
             </div>
         </section>
@@ -699,6 +747,10 @@
                         <strong>Console Entreprise (SaaS) :</strong> Gestion centralisée de la sécurité comportementale de tous vos employés.
                     </li>
                 </ul>
+                <div class="image-center">
+                    
+`
+                </div>
             </div>
         </section>
 
