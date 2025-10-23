@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosegi - CyberSentinel | À Propos de nous</title>
+    <style>
+        /* --- Variables et Configuration --- */
+        :root {
+            --color-primary: #0066cc;
+            --color-primary-dark: #004a99;
+            --color-secondary: #00d4ff;
+            --color-dark: #0a0e27;
+            --color-gray-dark: #1a1f3a;
+            --color-gray: #6b7280;
+            --color-light: #f8fafc;
+            --color-white: #ffffff;
+            --color-success: #10b981;
+            --color-warning: #f59e0b;
+            --color-danger: #ef4444;
+            --gradient-primary: linear-gradient(135deg, #0066cc 0%, #004a99 100%);
+            --gradient-secondary: linear-gradient(135deg, #00d4ff 0%, #0066cc 100%);
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
+            --shadow-xl: 0 20px 50px rgba(0,0,0,0.15);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: var(--color-dark);
+            background: var(--color-white);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        /* --- Header & Navigation --- */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            box-shadow: var(--shadow-md);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .logo:hover {
+            transform: translateY(-2px);
+        }
+
+        .logo-divider {
+            margin: 0 12px;
+            color: var(--color-gray);
+            font-weight: 300;
+        }
+
+        .logo-product {
+            color: var(--color-dark);
+            font-weight: 600;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            align-items: center;
+            gap: 32px;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: var(--color-dark);
+            font-weight: 500;
+            font-size: 15px;
+            transition: var(--transition);
+            position: relative;
+        }
+
+        nav a:not(.btn-primary)::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--color-primary);
+            transition: var(--transition);
+        }
+
+        nav a:not(.btn-primary):hover::after {
+            width: 100%;
+        }
+
+        nav a:not(.btn-primary):hover {
+            color: var(--color-primary);
+        }
+
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: var(--color-white);
+            padding: 12px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: var(--transition);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            flex-direction: column;
+            gap: 5px;
+            cursor: pointer;
+            padding: 8px;
+        }
+
+        .mobile-menu-btn span {
+            width: 25px;
+            height: 2px;
+            background: var(--color-dark);
+            transition: var(--transition);
+        }
+
+        /* --- Sections --- */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 60px;
+        }
+
+        .section-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+            color: var(--color-primary);
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .section-title {
+            font-size: clamp(32px, 4vw, 48px);
+            font-weight: 800;
+            margin-bottom: 16px;
+            color: var(--color-dark);
+            line-height: 1.2;
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: var(--color-gray);
+            line-height: 1.7;
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--color-dark);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 60px 0 30px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-brand {
+            grid-column: span 1;
+        }
+
+        .footer-logo {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-white);
+            margin-bottom: 16px;
+        }
+
+        .footer-tagline {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .footer-section h4 {
+            color: var(--color-white);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--color-white);
+        }
+
+        .footer-bottom {
+            padding-top: 30px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            font-size: 14px;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        
+        /* --- NOUVEAUX STYLES POUR LA PAGE 'A PROPOS' --- */
+        #a-propos {
+            padding-top: 140px; /* Pour dégager le header fixe */
+            padding-bottom: 100px;
+            background: var(--color-light); /* Fond léger pour cette section */
+        }
+        
+        .team-grid {
+            display: grid;
+            /* Changé pour 2 colonnes max, plus centré */
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 32px;
+            margin-top: 60px;
+            max-width: 900px; /* Limite la largeur pour 2 cartes */
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .team-card {
+            background: var(--color-white);
+            border-radius: 16px;
+            box-shadow: var(--shadow-md);
+            padding: 40px;
+            text-align: center;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            animation: fadeInUp 0.6s ease-out backwards;
+        }
+
+        .team-card:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+
+        .team-card:hover {
+            transform: translateY(-8px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .team-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover; /* S'assure que l'image remplit le cercle */
+            margin-bottom: 24px;
+            border: 4px solid var(--color-primary);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .team-card h3 {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--color-dark);
+            margin-bottom: 8px;
+        }
+
+        .team-role {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-primary);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .team-bio {
+            font-size: 16px;
+            color: var(--color-gray);
+            line-height: 1.7;
+        }
+        /* --- FIN DES NOUVEAUX STYLES --- */
+
+
+        /* --- Responsive Design --- */
+        @media (max-width: 1024px) {
+            /* (styles responsive existants) */
+        }
+
+        @media (max-width: 400px) {
+            .nav-container {
+                padding: 16px 24px;
+            }
+
+            nav {
+                position: fixed;
+                top: 70px; /* Ajusté à la hauteur de votre header mobile */
+                left: -100%;
+                width: 100%;
+                background: var(--color-white);
+                box-shadow: var(--shadow-lg);
+                transition: var(--transition);
+                padding: 24px;
+            }
+
+            nav.active {
+                left: 0;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+            }
+
+            .mobile-menu-btn {
+                display: flex;
+            }
+
+            section {
+                padding: 60px 0;
+            }
+
+            #a-propos {
+                padding-top: 100px; /* Ajustement pour mobile */
+            }
+
+            .team-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+            
+            .team-card {
+                padding: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header id="header">
+        <div class="nav-container">
+            <a href="index.html" class="logo"> Cosegi<span class="logo-divider">/</span><span class="logo-product">CyberSentinel</span>
+            </a>
+            <nav id="nav">
+                <ul>
+                    <li><a href="index.html">Accueil</a></li>
+                    <li><a href="a-propos.html" style="color: var(--color-primary);">À Propos</a></li> <li><a href="index.html#fonctionnement">Fonctionnement</a></li>
+                    <li><a href="index.html#confidentialite">Confidentialité</a></li>
+                    <li><a href="index.html#evolutions">Évolutions</a></li>
+                    <li><a href="index.html#contact" class="btn-primary">Demander une démo</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-btn" onclick="toggleMenu()">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        
+        <section id="a-propos">
+            <div class="container">
+                
+                <div class="section-header">
+                    <div class="section-badge">Notre Équipe</div>
+                    <h2 class="section-title">Les créateurs de CyberSentinel</h2>
+                    <p class="section-description">
+                        Nous combinons expertise en cybersécurité et en intelligence artificielle pour 
+                        construire la prochaine génération de défenses numériques.
+                    </p>
+                </div>
+
+                <div class="team-grid">
+                    
+                    <div class="team-card">
+                        <img src="https://via.placeholder.com/150" alt="Photo de [Nom 1]" class="team-image">
+                        <h3>[Nom Prénom 1]</h3>
+                        <p class="team-role">CEO & Architecte IA</p>
+                        <p class="team-bio">
+                            Expert en Machine Learning avec plus de 10 ans d'expérience dans la détection de menaces. 
+                            [Nom 1] dirige la vision technique et l'innovation de CyberSentinel.
+                        </p>
+                    </div>
+
+                    <div class="team-card">
+                        <img src="https://via.placeholder.com/150" alt="Photo de [Nom 2]" class="team-image">
+                        <h3>[Nom Prénom 2]</h3>
+                        <p class="team-role">CTO & Spécialiste Cybersécurité</p>
+                        <p class="team-bio">
+                            Ancien consultant en sécurité (pentester), [Nom 2] assure que notre solution 
+                            répond aux standards de sécurité les plus élevés et reste en avance sur les attaquants.
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <div class="footer-logo">Cosegi</div>
+                    <p class="footer-tagline">
+                        La cybersécurité prédictive et comportementale.<br>
+                        Protéger l'humain au cœur du numérique.
+                    </p>
+                </div>
+                <div class="footer-section">
+                    <h4>Solution</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html#fonctionnement">Fonctionnement</a></li>
+                        <li><a href="index.html#confidentialite">Confidentialité</a></li>
+                        <li><a href="index.html#evolutions">Intégrations</a></li>
+                        <li><a href="index.html#contact">Demander une démo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Entreprise</h4>
+                    <ul class="footer-links">
+                        <li><a href="a-propos.html">À propos</a></li>
+                        <li><a href="#">Carrières</a></li>
+                        <li><a href="#">Presse</a></li>
+                        <li><a href="index.html#contact">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h4>Ressources</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Support</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2025 Cosegi. Tous droits réservés.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu mobile toggle
+        function toggleMenu() {
+            const nav = document.getElementById('nav');
+            nav.classList.toggle('active');
+        }
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('nav a').forEach(link => {
+            link.addEventListener('click', function() {
+                const nav = document.getElementById('nav');
+                nav.classList.remove('active');
+            }
+            );
+        });
+
+        // Smooth scroll animation for internal links
+        // (Note: ne s'appliquera qu'aux ancres sur la même page)
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    const headerOffset = 80;
+                    const elementPosition = target.getBoundingClientRect().top;
+                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+                    window.scrollTo({
+                        top: offsetPosition,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
