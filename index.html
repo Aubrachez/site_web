@@ -1,567 +1,376 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosegi - Robot de Nettoyage par Capture Gestuelle</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CleanGest - Robot de Nettoyage par Capture Gestuelle</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Inter', sans-serif;
+      color: #222;
+      background: #f9fafb;
+      line-height: 1.7;
+      scroll-behavior: smooth;
+    }
 
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background: #f8f9fa;
-        }
+    /* HEADER */
+    header {
+      position: relative;
+      text-align: center;
+      color: white;
+      background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+      overflow: hidden;
+    }
+    header::after {
+      content: "";
+      background: url('https://images.unsplash.com/photo-1581090700227-1e37b190418e?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      opacity: 0.2;
+      position: absolute;
+      inset: 0;
+    }
+    header .content {
+      position: relative;
+      z-index: 2;
+      padding: 120px 20px;
+    }
+    header h1 {
+      font-size: 3rem;
+      font-weight: 700;
+      margin-bottom: 15px;
+    }
+    header p {
+      font-size: 1.3rem;
+      opacity: 0.9;
+    }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+    /* NAV */
+    nav {
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    nav ul {
+      display: flex;
+      justify-content: center;
+      list-style: none;
+      padding: 15px 0;
+    }
+    nav a {
+      color: #6366f1;
+      text-decoration: none;
+      font-weight: 600;
+      margin: 0 20px;
+      transition: color 0.3s, border-bottom 0.3s;
+      border-bottom: 2px solid transparent;
+      padding-bottom: 4px;
+    }
+    nav a:hover {
+      color: #8b5cf6;
+      border-bottom: 2px solid #8b5cf6;
+    }
 
-        header {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 80px 0;
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-        }
+    /* SECTION */
+    section {
+      padding: 80px 20px;
+      max-width: 1200px;
+      margin: auto;
+    }
+    h2 {
+      text-align: center;
+      font-size: 2.5em;
+      color: #6366f1;
+      margin-bottom: 50px;
+      position: relative;
+    }
+    h2::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      border-radius: 2px;
+      margin: 20px auto 0;
+    }
 
-        header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
-            opacity: 0.3;
-        }
+    /* FEATURES */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 40px;
+    }
+    .feature-card {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.08);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 40px rgba(99,102,241,0.2);
+    }
+    .feature-card img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    .feature-card .content {
+      padding: 25px;
+      text-align: center;
+    }
+    .feature-card h3 {
+      margin-bottom: 10px;
+      color: #333;
+      font-size: 1.4em;
+    }
+    .feature-card p {
+      color: #666;
+    }
 
-        header h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 1;
-            animation: fadeInDown 1s ease;
-        }
+    /* TIMELINE */
+    .timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      max-width: 800px;
+      margin: auto;
+    }
+    .timeline-item {
+      display: flex;
+      gap: 25px;
+      align-items: flex-start;
+    }
+    .timeline-number {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      border-radius: 50%;
+      width: 55px;
+      height: 55px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-weight: 700;
+      font-size: 1.2em;
+      box-shadow: 0 4px 15px rgba(99,102,241,0.4);
+      flex-shrink: 0;
+    }
+    .timeline-content {
+      background: white;
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    }
+    .timeline-content h3 {
+      color: #6366f1;
+      margin-bottom: 10px;
+    }
+    .timeline-content p {
+      color: #555;
+    }
 
-        header p {
-            font-size: 1.3em;
-            position: relative;
-            z-index: 1;
-            opacity: 0.95;
-            animation: fadeInUp 1s ease;
-        }
+    /* TECH GRID */
+    .tech-specs {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 25px;
+    }
+    .spec-item {
+      background: linear-gradient(135deg, #f3f4f6, #e5e7eb);
+      border-left: 5px solid #6366f1;
+      border-radius: 10px;
+      padding: 25px;
+      transition: 0.3s ease;
+    }
+    .spec-item:hover { background: #eef2ff; }
+    .spec-item h4 {
+      color: #6366f1;
+      margin-bottom: 10px;
+    }
+    .spec-item li {
+      margin-bottom: 6px;
+      color: #444;
+      list-style: none;
+      position: relative;
+      padding-left: 22px;
+    }
+    .spec-item li::before {
+      content: '✔';
+      color: #6366f1;
+      position: absolute;
+      left: 0;
+    }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    /* CTA */
+    .cta {
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      color: white;
+      text-align: center;
+      padding: 100px 20px;
+    }
+    .cta h2::after { background: white; }
+    .cta p {
+      margin: 20px auto 40px;
+      max-width: 600px;
+      opacity: 0.9;
+    }
+    .btn {
+      display: inline-block;
+      background: white;
+      color: #6366f1;
+      padding: 14px 40px;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+    .btn:hover {
+      background: #f9f9ff;
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255,255,255,0.2);
+    }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    footer {
+      background: #1f2937;
+      color: #e5e7eb;
+      text-align: center;
+      padding: 25px 0;
+      font-size: 0.9em;
+    }
 
-        nav {
-            background: white;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-        }
-
-        nav ul {
-            list-style: none;
-            display: flex;
-            justify-content: center;
-            padding: 15px 0;
-        }
-
-        nav li {
-            margin: 0 25px;
-        }
-
-        nav a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-            padding: 5px 0;
-            border-bottom: 2px solid transparent;
-        }
-
-        nav a:hover {
-            color: #764ba2;
-            border-bottom-color: #764ba2;
-        }
-
-        section {
-            padding: 80px 0;
-        }
-
-        section:nth-child(even) {
-            background: white;
-        }
-
-        h2 {
-            font-size: 2.5em;
-            color: #667eea;
-            margin-bottom: 40px;
-            text-align: center;
-            position: relative;
-        }
-
-        h2::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 4px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            margin: 20px auto 0;
-            border-radius: 2px;
-        }
-
-        .feature-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
-            margin-top: 60px;
-        }
-
-        .feature-card {
-            background: white;
-            padding: 40px;
-            border-radius: 15px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
-            transition: transform 0.3s, box-shadow 0.3s;
-            text-align: center;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(102,126,234,0.2);
-        }
-
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 25px;
-            font-size: 2em;
-            color: white;
-        }
-
-        .feature-card h3 {
-            font-size: 1.5em;
-            color: #333;
-            margin-bottom: 15px;
-        }
-
-        .feature-card p {
-            color: #666;
-            line-height: 1.8;
-        }
-
-        .tech-specs {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 30px;
-            margin-top: 50px;
-        }
-
-        .spec-item {
-            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            padding: 30px;
-            border-radius: 10px;
-            border-left: 5px solid #667eea;
-        }
-
-        .spec-item h4 {
-            color: #667eea;
-            font-size: 1.3em;
-            margin-bottom: 15px;
-        }
-
-        .spec-item ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        .spec-item li {
-            padding: 8px 0;
-            padding-left: 25px;
-            position: relative;
-            color: #555;
-        }
-
-        .spec-item li::before {
-            content: '✓';
-            position: absolute;
-            left: 0;
-            color: #667eea;
-            font-weight: bold;
-        }
-
-        .process-timeline {
-            position: relative;
-            max-width: 900px;
-            margin: 60px auto;
-        }
-
-        .timeline-item {
-            display: flex;
-            margin-bottom: 50px;
-            position: relative;
-        }
-
-        .timeline-number {
-            min-width: 60px;
-            height: 60px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5em;
-            font-weight: bold;
-            margin-right: 30px;
-            box-shadow: 0 5px 15px rgba(102,126,234,0.3);
-        }
-
-        .timeline-content {
-            flex: 1;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-        }
-
-        .timeline-content h3 {
-            color: #667eea;
-            margin-bottom: 15px;
-            font-size: 1.4em;
-        }
-
-        .timeline-content p {
-            color: #666;
-            line-height: 1.8;
-        }
-
-        .cta-section {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            text-align: center;
-            padding: 100px 0;
-        }
-
-        .cta-section h2 {
-            color: white;
-        }
-
-        .cta-section h2::after {
-            background: white;
-        }
-
-        .cta-section p {
-            font-size: 1.2em;
-            margin-bottom: 40px;
-            opacity: 0.95;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 15px 40px;
-            background: white;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: 600;
-            font-size: 1.1em;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        }
-
-        footer {
-            background: #2d3748;
-            color: white;
-            text-align: center;
-            padding: 30px 0;
-        }
-
-        footer p {
-            opacity: 0.8;
-        }
-
-        @media (max-width: 768px) {
-            header h1 {
-                font-size: 2em;
-            }
-
-            header p {
-                font-size: 1.1em;
-            }
-
-            nav ul {
-                flex-direction: column;
-                align-items: center;
-            }
-
-            nav li {
-                margin: 10px 0;
-            }
-
-            .feature-grid,
-            .tech-specs {
-                grid-template-columns: 1fr;
-            }
-
-            h2 {
-                font-size: 2em;
-            }
-        }
-    </style>
+    @media (max-width: 768px) {
+      header h1 { font-size: 2.2rem; }
+      .timeline-item { flex-direction: column; align-items: center; text-align: center; }
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <div class="container">
-            <h1>Cosegi</h1>
-            <p>Robot de Nettoyage par Capture Gestuelle</p>
-        </div>
-    </header>
+  <header>
+    <div class="content">
+      <h1>CleanGest</h1>
+      <p>Le Robot de Nettoyage Intelligent par Capture Gestuelle</p>
+    </div>
+  </header>
 
-    <nav>
+  <nav>
+    <ul>
+      <li><a href="#presentation">Présentation</a></li>
+      <li><a href="#fonctionnement">Fonctionnement</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <section id="presentation">
+    <h2>Une Innovation Révolutionnaire</h2>
+    <p style="text-align:center; max-width:800px; margin:auto; color:#555; font-size:1.1em;">
+      CleanGest allie robotique avancée et capture gestuelle pour automatiser le nettoyage. Enregistrez vos gestes une fois — le robot les reproduira avec précision, efficacité et constance.
+    </p>
+    <div class="feature-grid" style="margin-top:60px;">
+      <div class="feature-card">
+        <img src="https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80" alt="Robot autonome">
+        <div class="content">
+          <h3>Robot Autonome</h3>
+          <p>Base mobile motorisée avec bras 5 DOF pour exécuter des mouvements complexes avec une précision millimétrique.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <img src="https://images.unsplash.com/photo-1581093588401-22d8f2f95b2d?auto=format&fit=crop&w=800&q=80" alt="Gant gestuel">
+        <div class="content">
+          <h3>Capture Gestuelle</h3>
+          <p>Gant équipé de capteurs IMU et vision stéréoscopique pour un suivi 3D ultra-précis de vos gestes.</p>
+        </div>
+      </div>
+      <div class="feature-card">
+        <img src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80" alt="Reproduction précise">
+        <div class="content">
+          <h3>Reproduction Fidèle</h3>
+          <p>Fusion de données IMU/Vision garantissant la reproduction exacte de vos gestes à chaque exécution.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fonctionnement">
+    <h2>Comment ça Fonctionne</h2>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-number">1</div>
+        <div class="timeline-content">
+          <h3>Enregistrement Gestuel</h3>
+          <p>Les capteurs IMU et caméras enregistrent simultanément la position et l’orientation de la main en 3D.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-number">2</div>
+        <div class="timeline-content">
+          <h3>Fusion et Traitement</h3>
+          <p>Les données IMU et vision sont fusionnées pour créer une trajectoire fluide et précise, corrigée des dérives.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-number">3</div>
+        <div class="timeline-content">
+          <h3>Stockage et Apprentissage</h3>
+          <p>Les gestes sont sauvegardés dans un format exploitable pour être reproduits à la demande.</p>
+        </div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-number">4</div>
+        <div class="timeline-content">
+          <h3>Exécution Autonome</h3>
+          <p>Le robot exécute vos mouvements, assurant un nettoyage identique, sans effort, à chaque cycle.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="architecture">
+    <h2>Architecture Technique</h2>
+    <div class="tech-specs">
+      <div class="spec-item">
+        <h4>🧤 Gant de Capture</h4>
         <ul>
-            <li><a href="#presentation">Présentation</a></li>
-            <li><a href="#fonctionnement">Fonctionnement</a></li>
-            <li><a href="#architecture">Architecture</a></li>
-            <li><a href="#contact">Contact</a></li>
+          <li>Capteurs IMU multi-axes</li>
+          <li>Calibration automatique</li>
+          <li>Transmission sans fil</li>
         </ul>
-    </nav>
+      </div>
+      <div class="spec-item">
+        <h4>📹 Système de Vision</h4>
+        <ul>
+          <li>Webcams stéréoscopiques</li>
+          <li>Reconstruction 3D en temps réel</li>
+        </ul>
+      </div>
+      <div class="spec-item">
+        <h4>🔧 Arduino Control</h4>
+        <ul>
+          <li>Synchronisation multi-capteurs</li>
+          <li>Communication série optimisée</li>
+        </ul>
+      </div>
+      <div class="spec-item">
+        <h4>🤖 Robot Mobile</h4>
+        <ul>
+          <li>Plateforme autonome motorisée</li>
+          <li>Bras robotique 5 DOF</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
-    <section id="presentation">
-        <div class="container">
-            <h2>Une Innovation Révolutionnaire</h2>
-            <p style="text-align: center; font-size: 1.2em; color: #666; max-width: 800px; margin: 0 auto 60px;">
-                CleanGest combine robotique avancée et capture gestuelle pour automatiser vos tâches de nettoyage. 
-                Enregistrez vos mouvements une seule fois, et laissez le robot les reproduire avec précision.
-            </p>
+  <section id="contact" class="cta">
+    <h2>Intéressé par le Projet ?</h2>
+    <p>Rejoignez l’avenir du nettoyage intelligent et des interactions gestuelles.</p>
+    <a href="mailto:contact@cleangest.com" class="btn">Nous Contacter</a>
+  </section>
 
-            <div class="feature-grid">
-                <div class="feature-card">
-                    <div class="feature-icon">🤖</div>
-                    <h3>Robot Autonome</h3>
-                    <p>Base mobile motorisée avec bras robotique 5 DOF capable d'exécuter des trajectoires complexes avec précision.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🧤</div>
-                    <h3>Capture Gestuelle</h3>
-                    <p>Gant équipé de capteurs IMU et système de vision double caméra pour un suivi 3D ultra-précis de vos mouvements.</p>
-                </div>
-                <div class="feature-card">
-                    <div class="feature-icon">🎯</div>
-                    <h3>Reproduction Fidèle</h3>
-                    <p>Algorithmes avancés de fusion de données pour reproduire exactement vos gestes avec une précision millimétrique.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="fonctionnement">
-        <div class="container">
-            <h2>Comment Ça Fonctionne</h2>
-            
-            <div class="process-timeline">
-                <div class="timeline-item">
-                    <div class="timeline-number">1</div>
-                    <div class="timeline-content">
-                        <h3>Enregistrement Gestuel</h3>
-                        <p>Enfilez le gant équipé de capteurs IMU. Les deux webcams et les capteurs inertiels capturent simultanément la position et l'orientation de votre main en 3D pendant que vous effectuez le geste de nettoyage.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-number">2</div>
-                    <div class="timeline-content">
-                        <h3>Traitement et Fusion</h3>
-                        <p>L'Arduino collecte les données des IMU tandis que le système informatique fusionne les informations de vision et d'orientation pour créer une trajectoire 3D précise, compensant la dérive des capteurs.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-number">3</div>
-                    <div class="timeline-content">
-                        <h3>Stockage de la Trajectoire</h3>
-                        <p>La trajectoire complète (position, orientation, timing) est sauvegardée dans un format exploitable, prête à être reproduite à tout moment par le robot.</p>
-                    </div>
-                </div>
-
-                <div class="timeline-item">
-                    <div class="timeline-number">4</div>
-                    <div class="timeline-content">
-                        <h3>Reproduction Autonome</h3>
-                        <p>Le robot mobile se positionne automatiquement, puis son bras robotique équipé d'une éponge reproduit fidèlement les mouvements enregistrés, garantissant un nettoyage identique à chaque fois.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="architecture">
-        <div class="container">
-            <h2>Architecture Technique</h2>
-            
-            <div class="tech-specs">
-                <div class="spec-item">
-                    <h4>🧤 Gant de Capture</h4>
-                    <ul>
-                        <li>Capteurs IMU multi-axes</li>
-                        <li>Mesure d'orientation haute précision</li>
-                        <li>Calibration automatique</li>
-                        <li>Transmission sans fil</li>
-                    </ul>
-                </div>
-
-                <div class="spec-item">
-                    <h4>📹 Système de Vision</h4>
-                    <ul>
-                        <li>Deux webcams stéréoscopiques</li>
-                        <li>Reconstruction 3D en temps réel</li>
-                        <li>Suivi markerless ou avec marqueurs</li>
-                        <li>Compensation de la dérive IMU</li>
-                    </ul>
-                </div>
-
-                <div class="spec-item">
-                    <h4>🔧 Contrôle Arduino</h4>
-                    <ul>
-                        <li>Collecte des données IMU</li>
-                        <li>Synchronisation multi-capteurs</li>
-                        <li>Interface avec système de vision</li>
-                        <li>Communication série optimisée</li>
-                    </ul>
-                </div>
-
-                <div class="spec-item">
-                    <h4>💻 Traitement Données</h4>
-                    <ul>
-                        <li>Fusion IMU/Vision robuste</li>
-                        <li>Calibration des référentiels</li>
-                        <li>Interpolation de trajectoires</li>
-                        <li>Stockage et récupération</li>
-                    </ul>
-                </div>
-
-                <div class="spec-item">
-                    <h4>🤖 Robot Mobile</h4>
-                    <ul>
-                        <li>Plateforme motorisée autonome</li>
-                        <li>Bras robotique 5 DOF</li>
-                        <li>Asservissement haute précision</li>
-                        <li>Détection d'obstacles</li>
-                    </ul>
-                </div>
-
-                <div class="spec-item">
-                    <h4>🛡️ Sécurité</h4>
-                    <ul>
-                        <li>Arrêt d'urgence automatique</li>
-                        <li>Vérification de trajectoire</li>
-                        <li>Mode simulation/test</li>
-                        <li>Protocoles de sécurité</li>
-                    </ul>
-                </div>
-            </div>
-
-            <div style="margin-top: 80px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 50px; border-radius: 15px;">
-                <h3 style="color: #667eea; text-align: center; font-size: 1.8em; margin-bottom: 30px;">Applications et Perspectives</h3>
-                <p style="color: #555; line-height: 1.8; text-align: center; max-width: 800px; margin: 0 auto;">
-                    Au-delà du nettoyage domestique, CleanGest ouvre la voie à de nombreuses applications : 
-                    télé-opération à distance, assistance pour personnes à mobilité réduite, automatisation de tâches 
-                    industrielles répétitives, formation gestuelle, et bien plus encore. Le système est conçu pour 
-                    être évolutif et adaptable à divers secteurs.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="cta-section">
-        <div class="container">
-            <h2>Intéressé par le Projet ?</h2>
-            <p>Rejoignez l'innovation en robotique domestique et industrielle</p>
-            <a href="mailto:contact@cleangest.com" class="btn">Nous Contacter</a>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 CleanGest - Tous droits réservés | Robot de Nettoyage par Capture Gestuelle</p>
-        </div>
-    </footer>
-
-    <script>
-        // Smooth scrolling pour la navigation
-        document.querySelectorAll('nav a').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            });
-        });
-
-        // Animation au scroll
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.feature-card, .timeline-item, .spec-item').forEach(el => {
-            el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
-            observer.observe(el);
-        });
-    </script>
+  <footer>
+    <p>© 2025 CleanGest — Tous droits réservés | Robot de Nettoyage par Capture Gestuelle</p>
+  </footer>
 </body>
 </html>
