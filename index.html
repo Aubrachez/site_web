@@ -3,788 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cosegi - CyberSentinel | Cybersécurité Comportementale IA</title>
+    <title>Cosegi - Robot de Nettoyage par Capture Gestuelle</title>
     <style>
-        /* --- Variables et Configuration --- */
-        :root {
-            --color-primary: #0066cc;
-            --color-primary-dark: #004a99;
-            --color-secondary: #00d4ff;
-            --color-dark: #0a0e27;
-            --color-gray-dark: #1a1f3a;
-            --color-gray: #6b7280;
-            --color-light: #f8fafc;
-            --color-white: #ffffff;
-            --color-success: #10b981;
-            --color-warning: #f59e0b;
-            --color-danger: #ef4444;
-            --gradient-primary: linear-gradient(135deg, #0066cc 0%, #004a99 100%);
-            --gradient-secondary: linear-gradient(135deg, #00d4ff 0%, #0066cc 100%);
-            --shadow-sm: 0 1px 3px rgba(0,0,0,0.05);
-            --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-            --shadow-lg: 0 10px 30px rgba(0,0,0,0.12);
-            --shadow-xl: 0 20px 50px rgba(0,0,0,0.15);
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
-        }
-
-        html {
-            scroll-behavior: smooth;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: var(--color-dark);
-            background: var(--color-white);
-            overflow-x: hidden;
+            color: #333;
+            background: #f8f9fa;
         }
 
         .container {
-            max-width: 1280px;
+            max-width: 1200px;
             margin: 0 auto;
-            padding: 0 24px;
+            padding: 0 20px;
         }
 
-        /* --- Header & Navigation --- */
         header {
-            position: fixed;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 80px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
             top: 0;
             left: 0;
             right: 0;
-            z-index: 1000;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><defs><pattern id="grid" width="100" height="100" patternUnits="userSpaceOnUse"><path d="M 100 0 L 0 0 0 100" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/></pattern></defs><rect width="100%" height="100%" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
         }
 
-        header.scrolled {
-            box-shadow: var(--shadow-md);
-        }
-
-        .nav-container {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 24px;
-            max-width: 1280px;
-            margin: 0 auto;
-        }
-
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 24px;
-            font-weight: 700;
-            color: var(--color-primary);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .logo:hover {
-            transform: translateY(-2px);
-        }
-
-        .logo-divider {
-            margin: 0 12px;
-            color: var(--color-gray);
-            font-weight: 300;
-        }
-
-        .logo-product {
-            color: var(--color-dark);
-            font-weight: 600;
-        }
-
-        nav ul {
-            display: flex;
-            list-style: none;
-            align-items: center;
-            gap: 32px;
-        }
-
-        nav a {
-            text-decoration: none;
-            color: var(--color-dark);
-            font-weight: 500;
-            font-size: 15px;
-            transition: var(--transition);
-            position: relative;
-        }
-
-        nav a:not(.btn-primary)::after {
-            content: '';
-            position: absolute;
-            bottom: -4px;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--color-primary);
-            transition: var(--transition);
-        }
-
-        nav a:not(.btn-primary):hover::after {
-            width: 100%;
-        }
-
-        nav a:not(.btn-primary):hover {
-            color: var(--color-primary);
-        }
-
-        .btn-primary {
-            background: var(--gradient-primary);
-            color: var(--color-white);
-            padding: 12px 28px;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: var(--transition);
-            box-shadow: var(--shadow-sm);
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-md);
-        }
-
-        .mobile-menu-btn {
-            display: none;
-            flex-direction: column;
-            gap: 5px;
-            cursor: pointer;
-            padding: 8px;
-        }
-
-        .mobile-menu-btn span {
-            width: 25px;
-            height: 2px;
-            background: var(--color-dark);
-            transition: var(--transition);
-        }
-
-        /* --- Hero Section --- */
-        .hero {
-            padding: 140px 0 100px;
-            background: linear-gradient(180deg, var(--color-light) 0%, var(--color-white) 100%);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            right: -20%;
-            width: 60%;
-            height: 100%;
-            background: radial-gradient(circle, rgba(0, 102, 204, 0.05) 0%, transparent 70%);
-            pointer-events: none;
-        }
-
-        .hero-content {
-            max-width: 800px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .hero-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: var(--color-white);
-            padding: 8px 16px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 500;
-            color: var(--color-primary);
-            box-shadow: var(--shadow-sm);
-            margin-bottom: 24px;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .hero h1 {
-            font-size: clamp(40px, 6vw, 64px);
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 24px;
-            color: var(--color-dark);
-            animation: fadeInUp 0.6s ease-out 0.1s backwards;
-        }
-
-        .hero-gradient-text {
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: clamp(18px, 2vw, 22px);
-            line-height: 1.7;
-            color: var(--color-gray);
-            margin-bottom: 40px;
-            animation: fadeInUp 0.6s ease-out 0.2s backwards;
-        }
-
-        .hero-cta {
-            display: flex;
-            gap: 16px;
-            flex-wrap: wrap;
-            animation: fadeInUp 0.6s ease-out 0.3s backwards;
-        }
-
-        .btn-large {
-            padding: 16px 32px;
-            font-size: 16px;
-            border-radius: 10px;
-            font-weight: 600;
-            text-decoration: none;
-            transition: var(--transition);
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .btn-primary-large {
-            background: var(--gradient-primary);
-            color: var(--color-white);
-            box-shadow: var(--shadow-md);
-        }
-
-        .btn-primary-large:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .btn-secondary-large {
-            background: var(--color-white);
-            color: var(--color-primary);
-            border: 2px solid var(--color-primary);
-        }
-
-        .btn-secondary-large:hover {
-            background: var(--color-primary);
-            color: var(--color-white);
-        }
-
-        /* --- Sections --- */
-        section {
-            padding: 100px 0;
-            position: relative;
-        }
-
-        .section-header {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto 60px;
-        }
-
-        .section-badge {
-            display: inline-block;
-            background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
-            color: var(--color-primary);
-            padding: 8px 20px;
-            border-radius: 50px;
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 16px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .section-title {
-            font-size: clamp(32px, 4vw, 48px);
-            font-weight: 800;
-            margin-bottom: 16px;
-            color: var(--color-dark);
-            line-height: 1.2;
-        }
-
-        .section-description {
-            font-size: 18px;
-            color: var(--color-gray);
-            line-height: 1.7;
-        }
-
-        /* --- Problem Solution Grid --- */
-        .problem-solution-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 32px;
-            margin-top: 60px;
-        }
-
-        .ps-card {
-            background: var(--color-white);
-            padding: 40px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            transition: var(--transition);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .ps-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .ps-card-icon {
-            width: 64px;
-            height: 64px;
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 32px;
-            margin-bottom: 24px;
-        }
-
-        .ps-card-problem .ps-card-icon {
-            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(239, 68, 68, 0.05) 100%);
-        }
-
-        .ps-card-solution .ps-card-icon {
-            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.05) 100%);
-        }
-
-        .ps-card h3 {
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .ps-card-problem h3 { color: var(--color-danger); }
-        .ps-card-solution h3 { color: var(--color-success); }
-
-        .ps-card ul {
-            list-style: none;
-            padding: 0;
-        }
-
-        .ps-card li {
-            padding: 12px 0;
-            padding-left: 32px;
-            position: relative;
-            font-size: 16px;
-            color: var(--color-gray);
-            line-height: 1.6;
-        }
-
-        .ps-card li::before {
-            position: absolute;
-            left: 0;
-            font-size: 18px;
-        }
-
-        .ps-card-problem li::before { content: '❌'; }
-        .ps-card-solution li::before { content: '✅'; }
-
-        /* --- Alert Demo --- */
-        .alert-demo-container {
-            display: grid;
-            gap: 16px;
-            margin-top: 32px;
-        }
-
-        .alert-demo {
-            padding: 20px 24px;
-            border-radius: 12px;
-            font-weight: 600;
-            font-size: 15px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            transition: var(--transition);
-            cursor: pointer;
-        }
-
-        .alert-demo:hover {
-            transform: translateX(8px);
-        }
-
-        .alert-legit {
-            background: linear-gradient(135deg, #ecfdf5 0%, #d1fae5 100%);
-            border-left: 4px solid var(--color-success);
-            color: #065f46;
-        }
-
-        .alert-suspect {
-            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
-            border-left: 4px solid var(--color-warning);
-            color: #92400e;
-        }
-
-        .alert-danger {
-            background: linear-gradient(135deg, #fef2f2 0%, #fee2e2 100%);
-            border-left: 4px solid var(--color-danger);
-            color: #991b1b;
-        }
-
-        /* --- Features Grid --- */
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 32px;
-            margin-top: 60px;
-        }
-
-        .feature-card {
-            background: var(--color-white);
-            padding: 40px 32px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-sm);
-            border: 1px solid rgba(0, 0, 0, 0.05);
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .feature-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 4px;
-            background: var(--gradient-primary);
-            transform: scaleX(0);
-            transition: var(--transition);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .feature-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .feature-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
+        header h1 {
+            font-size: 3em;
             margin-bottom: 20px;
-        }
-
-        .feature-card h3 {
-            font-size: 20px;
-            font-weight: 700;
-            margin-bottom: 12px;
-            color: var(--color-dark);
-        }
-
-        .feature-card p {
-            color: var(--color-gray);
-            line-height: 1.7;
-        }
-
-        /* --- Architecture Flow --- */
-        .architecture-flow {
-            max-width: 900px;
-            margin: 60px auto 0;
-            display: flex;
-            flex-direction: column;
-            gap: 24px;
-        }
-
-        .flow-item {
-            background: var(--color-white);
-            padding: 32px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            border: 2px solid rgba(0, 102, 204, 0.1);
-            transition: var(--transition);
             position: relative;
+            z-index: 1;
+            animation: fadeInDown 1s ease;
         }
 
-        .flow-item:hover {
-            border-color: var(--color-primary);
-            transform: translateX(8px);
-        }
-
-        .flow-item-core {
-            background: var(--gradient-primary);
-            color: var(--color-white);
-            border-color: transparent;
-        }
-
-        .flow-item h4 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .flow-arrow {
-            text-align: center;
-            font-size: 32px;
-            color: var(--color-primary);
-        }
-
-        /* --- Stats Grid --- */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 32px;
-            margin-top: 60px;
-        }
-
-        .stat-card {
-            background: var(--color-white);
-            padding: 40px 32px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            text-align: center;
-            transition: var(--transition);
-        }
-
-        .stat-card:hover {
-            transform: translateY(-8px);
-            box-shadow: var(--shadow-xl);
-        }
-
-        .stat-number {
-            font-size: 48px;
-            font-weight: 800;
-            background: var(--gradient-primary);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            margin-bottom: 8px;
-        }
-
-        .stat-label {
-            font-size: 16px;
-            color: var(--color-gray);
-            font-weight: 600;
-        }
-
-        .stat-description {
-            font-size: 14px;
-            color: var(--color-gray);
-            margin-top: 12px;
-            line-height: 1.6;
-        }
-
-        /* --- Technical Summary --- */
-        .tech-summary {
-            max-width: 1000px;
-            margin: 60px auto 0;
-            background: var(--color-white);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: var(--shadow-xl);
-        }
-
-        .tech-summary-header {
-            background: var(--gradient-primary);
-            color: var(--color-white);
-            padding: 32px 40px;
-            text-align: center;
-        }
-
-        .tech-summary-header h3 {
-            font-size: 28px;
-            font-weight: 700;
-        }
-
-        .tech-summary-body {
-            padding: 0;
-        }
-
-        .tech-row {
-            display: grid;
-            grid-template-columns: 250px 1fr;
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-        }
-
-        .tech-row:last-child {
-            border-bottom: none;
-        }
-
-        .tech-label {
-            padding: 24px 40px;
-            background: rgba(0, 102, 204, 0.03);
-            font-weight: 700;
-            color: var(--color-dark);
-            display: flex;
-            align-items: center;
-        }
-
-        .tech-value {
-            padding: 24px 40px;
-            color: var(--color-gray);
-            display: flex;
-            align-items: center;
-        }
-
-        /* --- Roadmap --- */
-        .roadmap-grid {
-            display: grid;
-            gap: 20px;
-            max-width: 1000px;
-            margin: 60px auto 0;
-        }
-
-        .roadmap-item {
-            background: var(--color-white);
-            padding: 32px;
-            border-radius: 16px;
-            box-shadow: var(--shadow-md);
-            display: flex;
-            align-items: flex-start;
-            gap: 24px;
-            transition: var(--transition);
-            border-left: 4px solid var(--color-primary);
-        }
-
-        .roadmap-item:hover {
-            transform: translateX(8px);
-            box-shadow: var(--shadow-lg);
-        }
-
-        .roadmap-icon {
-            width: 56px;
-            height: 56px;
-            background: linear-gradient(135deg, rgba(0, 102, 204, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 28px;
-            flex-shrink: 0;
-        }
-
-        .roadmap-content h4 {
-            font-size: 18px;
-            font-weight: 700;
-            margin-bottom: 8px;
-            color: var(--color-dark);
-        }
-
-        .roadmap-content p {
-            color: var(--color-gray);
-            line-height: 1.6;
-        }
-
-        /* --- CTA Section --- */
-        .cta-section {
-            background: var(--gradient-primary);
-            color: var(--color-white);
-            padding: 100px 0;
-            text-align: center;
+        header p {
+            font-size: 1.3em;
             position: relative;
-            overflow: hidden;
+            z-index: 1;
+            opacity: 0.95;
+            animation: fadeInUp 1s ease;
         }
 
-        .cta-section::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
-            animation: pulse 15s ease-in-out infinite;
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
-        .cta-content {
-            position: relative;
-            z-index: 2;
-        }
-
-        .cta-section .section-title {
-            color: var(--color-white);
-            margin-bottom: 20px;
-        }
-
-        .cta-section .section-description {
-            color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 40px;
-        }
-
-        .cta-section .btn-large {
-            background: var(--color-white);
-            color: var(--color-primary);
-        }
-
-        .cta-section .btn-large:hover {
-            transform: translateY(-3px) scale(1.05);
-        }
-
-        /* --- Footer --- */
-        footer {
-            background: var(--color-dark);
-            color: rgba(255, 255, 255, 0.7);
-            padding: 60px 0 30px;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 40px;
-            margin-bottom: 40px;
-        }
-
-        .footer-brand {
-            grid-column: span 1;
-        }
-
-        .footer-logo {
-            font-size: 28px;
-            font-weight: 700;
-            color: var(--color-white);
-            margin-bottom: 16px;
-        }
-
-        .footer-tagline {
-            font-size: 14px;
-            line-height: 1.6;
-        }
-
-        .footer-section h4 {
-            color: var(--color-white);
-            font-size: 16px;
-            font-weight: 700;
-            margin-bottom: 16px;
-        }
-
-        .footer-links {
-            list-style: none;
-        }
-
-        .footer-links li {
-            margin-bottom: 12px;
-        }
-
-        .footer-links a {
-            color: rgba(255, 255, 255, 0.7);
-            text-decoration: none;
-            transition: var(--transition);
-        }
-
-        .footer-links a:hover {
-            color: var(--color-white);
-        }
-
-        .footer-bottom {
-            padding-top: 30px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            text-align: center;
-            font-size: 14px;
-        }
-
-        /* --- Animations --- */
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -796,525 +82,486 @@
             }
         }
 
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
+        nav {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        /* --- Responsive Design --- */
-        @media (max-width: 1024px) {
-            .tech-row {
-                grid-template-columns: 200px 1fr;
-            }
+        nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            padding: 15px 0;
         }
 
-        @media (max-width: 400px) {
-            .nav-container {
-                padding: 16px 24px;
+        nav li {
+            margin: 0 25px;
+        }
+
+        nav a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            padding: 5px 0;
+            border-bottom: 2px solid transparent;
+        }
+
+        nav a:hover {
+            color: #764ba2;
+            border-bottom-color: #764ba2;
+        }
+
+        section {
+            padding: 80px 0;
+        }
+
+        section:nth-child(even) {
+            background: white;
+        }
+
+        h2 {
+            font-size: 2.5em;
+            color: #667eea;
+            margin-bottom: 40px;
+            text-align: center;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            margin: 20px auto 0;
+            border-radius: 2px;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin-top: 60px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(102,126,234,0.2);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 2em;
+            color: white;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5em;
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .tech-specs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .spec-item {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+        }
+
+        .spec-item h4 {
+            color: #667eea;
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .spec-item ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .spec-item li {
+            padding: 8px 0;
+            padding-left: 25px;
+            position: relative;
+            color: #555;
+        }
+
+        .spec-item li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .process-timeline {
+            position: relative;
+            max-width: 900px;
+            margin: 60px auto;
+        }
+
+        .timeline-item {
+            display: flex;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .timeline-number {
+            min-width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin-right: 30px;
+            box-shadow: 0 5px 15px rgba(102,126,234,0.3);
+        }
+
+        .timeline-content {
+            flex: 1;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .timeline-content h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+
+        .timeline-content p {
+            color: #666;
+            line-height: 1.8;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 100px 0;
+        }
+
+        .cta-section h2 {
+            color: white;
+        }
+
+        .cta-section h2::after {
+            background: white;
+        }
+
+        .cta-section p {
+            font-size: 1.2em;
+            margin-bottom: 40px;
+            opacity: 0.95;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #667eea;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1em;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+        }
+
+        footer p {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
             }
 
-            nav {
-                position: fixed;
-                top: 70px;
-                left: -100%;
-                width: 100%;
-                background: var(--color-white);
-                box-shadow: var(--shadow-lg);
-                transition: var(--transition);
-                padding: 24px;
-            }
-
-            nav.active {
-                left: 0;
+            header p {
+                font-size: 1.1em;
             }
 
             nav ul {
                 flex-direction: column;
-                gap: 20px;
-                align-items: flex-start;
+                align-items: center;
             }
 
-            .mobile-menu-btn {
-                display: flex;
+            nav li {
+                margin: 10px 0;
             }
 
-            .hero {
-                padding: 100px 0 60px;
-            }
-
-            section {
-                padding: 60px 0;
-            }
-
-            .hero-cta {
-                flex-direction: column;
-            }
-
-            .btn-large {
-                width: 100%;
-                justify-content: center;
-            }
-
-            .problem-solution-grid,
-            .features-grid,
-            .stats-grid {
+            .feature-grid,
+            .tech-specs {
                 grid-template-columns: 1fr;
             }
 
-            .tech-row {
-                grid-template-columns: 1fr;
-            }
-
-            .tech-label,
-            .tech-value {
-                padding: 16px 24px;
-            }
-
-            .tech-label {
-                background: rgba(0, 102, 204, 0.05);
-            }
-
-            .roadmap-item {
-                flex-direction: column;
-            }
-
-            .footer-content {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .container {
-                padding: 0 16px;
-            }
-
-            .hero h1 {
-                font-size: 32px;
-            }
-
-            .section-title {
-                font-size: 28px;
-            }
-
-            .ps-card,
-            .feature-card,
-            .stat-card,
-            .roadmap-item {
-                padding: 24px;
+            h2 {
+                font-size: 2em;
             }
         }
     </style>
 </head>
 <body>
-
-    <header id="header">
-        <div class="nav-container">
-            <a href="#" class="logo">
-                Cosegi<span class="logo-divider">/</span><span class="logo-product">CyberSentinel</span>
-            </a>
-            <nav id="nav">
-                <ul>
-                    <li><a href="#vision">Vision</a></li>
-                    <li><a href="#fonctionnement">Fonctionnement</a></li>
-                    <li><a href="#confidentialite">Confidentialité</a></li>
-                    <li><a href="#evolutions">Évolutions</a></li>
-                    <li><a href="#contact" class="btn-primary">Demander une démo</a></li>
-                </ul>
-            </nav>
-            <div class="mobile-menu-btn" onclick="toggleMenu()">
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
+    <header>
+        <div class="container">
+            <h1>Cosegi</h1>
+            <p>Robot de Nettoyage par Capture Gestuelle</p>
         </div>
     </header>
 
-    <main>
-        <section class="hero" id="vision">
-            <div class="container">
-                <div class="hero-content">
-                    <div class="hero-badge">
-                        🛡️ Cybersécurité Comportementale IA
-                    </div>
-                    <h1>
-                        Protégez la <span class="hero-gradient-text">couche humaine</span> de votre entreprise
-                    </h1>
-                    <p>
-                        CyberSentinel utilise l'intelligence artificielle pour bloquer les cyberattaques au moment critique : avant que vos utilisateurs ne cliquent. Une protection prédictive qui va au-delà des antivirus traditionnels.
-                    </p>
-                    <div class="hero-cta">
-                        <a href="#contact" class="btn-large btn-primary-large">
-                            Demander une démo →
-                        </a>
-                        <a href="#fonctionnement" class="btn-large btn-secondary-large">
-                            Découvrir la solution
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </section>
+    <nav>
+        <ul>
+            <li><a href="#presentation">Présentation</a></li>
+            <li><a href="#fonctionnement">Fonctionnement</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
 
-        <section id="probleme">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-badge">Le défi</div>
-                    <h2 class="section-title">90% des cyberattaques exploitent l'erreur humaine</h2>
-                    <p class="section-description">
-                        Les pare-feux et antivirus ne suffisent plus. Les cybercriminels ciblent désormais directement vos employés via l'ingénierie sociale.
-                    </p>
-                </div>
-
-                <div class="problem-solution-grid">
-                    <div class="ps-card ps-card-problem">
-                        <div class="ps-card-icon">⚠️</div>
-                        <h3>Le Problème</h3>
-                        <p style="margin-bottom: 20px; color: var(--color-gray);">Les attaques contournent vos défenses techniques en manipulant la psychologie humaine :</p>
-                        <ul>
-                            <li>Phishing par e-mail sophistiqué</li>
-                            <li>Sites web d'apparence légitime</li>
-                            <li>Fichiers infectés déguisés</li>
-                            <li>Demandes frauduleuses urgentes</li>
-                        </ul>
-                    </div>
-
-                    <div class="ps-card ps-card-solution">
-                        <div class="ps-card-icon">🛡️</div>
-                        <h3>Notre Solution</h3>
-                        <p style="margin-bottom: 20px; color: var(--color-gray);">Une détection en temps réel qui alerte vos utilisateurs avant l'erreur fatale :</p>
-                        <div class="alert-demo-container">
-                            <div class="alert-demo alert-legit">
-                                🔒 Légitime - Navigation sécurisée
-                            </div>
-                            <div class="alert-demo alert-suspect">
-                                ⚠️ Suspect - Prudence recommandée
-                            </div>
-                            <div class="alert-demo alert-danger">
-                                🚨 Frauduleux - Phishing détecté
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="fonctionnement">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-badge">Technologie</div>
-                    <h2 class="section-title">Une IA entraînée pour détecter l'invisible</h2>
-                    <p class="section-description">
-                        Notre moteur d'intelligence artificielle analyse en temps réel chaque interaction pour identifier les menaces que les solutions traditionnelles manquent.
-                    </p>
-                </div>
-
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">🧠</div>
-                        <h3>Machine Learning Avancé</h3>
-                        <p>
-                            Entraîné sur des millions d'exemples légitimes et frauduleux, notre modèle atteint une précision de 99% et s'améliore continuellement.
-                        </p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔍</div>
-                        <h3>Analyse Multi-Couches</h3>
-                        <p>
-                            Inspection approfondie des URLs, domaines, redirections, certificats SSL, et structure HTML pour une détection exhaustive.
-                        </p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">📧</div>
-                        <h3>Protection E-mail Intelligente</h3>
-                        <p>
-                            Vérification des en-têtes SPF/DKIM, analyse linguistique du contenu, et détection des signaux d'urgence typiques des arnaques.
-                        </p>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">⚡</div>
-                        <h3>Réponse Instantanée</h3>
-                        <p>
-                            Alerte contextuelle en moins d'une seconde avec explication claire du danger et recommandation d'action immédiate.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="stats-grid" style="margin-top: 80px;">
-                    <div class="stat-card">
-                        <div class="stat-number">99%</div>
-                        <div class="stat-label">Précision</div>
-                        <p class="stat-description">Taux de détection validé sur des millions de cas réels</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">&lt;1s</div>
-                        <div class="stat-label">Temps d'analyse</div>
-                        <p class="stat-description">Protection instantanée sans ralentir votre navigation</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number">100%</div>
-                        <div class="stat-label">Local</div>
-                        <p class="stat-description">Analyse entièrement effectuée sur votre appareil</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="architecture" style="background: var(--color-light);">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-badge">Architecture</div>
-                    <h2 class="section-title">Conçu pour la confidentialité totale</h2>
-                    <p class="section-description">
-                        Architecture "Privacy-by-Design" : vos données ne quittent jamais votre machine. Zero-knowledge, zero-cloud, zero-compromis.
-                    </p>
-                </div>
-
-                <div class="architecture-flow">
-                    <div class="flow-item">
-                        <h4>1. Interface Utilisateur</h4>
-                        <p style="color: rgba(0,0,0,0.6); margin-top: 8px;">Extension navigateur, plugin mail ou application mobile</p>
-                    </div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-item">
-                        <h4>2. Module d'Analyse</h4>
-                        <p style="color: rgba(0,0,0,0.6); margin-top: 8px;">Extraction des caractéristiques : URL, en-têtes, contenu, métadonnées</p>
-                    </div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-item flow-item-core">
-                        <h4>3. Moteur IA (Machine Learning)</h4>
-                        <p style="color: rgba(255,255,255,0.9); margin-top: 8px;">Classification instantanée : Légitime / Suspect / Frauduleux</p>
-                    </div>
-                    <div class="flow-arrow">↓</div>
-                    <div class="flow-item">
-                        <h4>4. Notification & Journalisation</h4>
-                        <p style="color: rgba(0,0,0,0.6); margin-top: 8px;">Alerte contextuelle et logs locaux pour audit de sécurité</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="confidentialite">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-badge">Nos engagements</div>
-                    <h2 class="section-title">Performance, Confidentialité, Transparence</h2>
-                    <p class="section-description">
-                        Des standards élevés qui ne sont pas négociables. Votre sécurité mérite l'excellence sur tous les plans.
-                    </p>
-                </div>
-
-                <div class="features-grid">
-                    <div class="feature-card">
-                        <div class="feature-icon">📊</div>
-                        <h3>Performance Optimale</h3>
-                        <ul style="list-style: none; padding: 0; margin-top: 16px;">
-                            <li style="padding: 8px 0; color: var(--color-gray);">✓ Précision moyenne ≈ 99%</li>
-                            <li style="padding: 8px 0; color: var(--color-gray);">✓ Analyse en moins d'1 seconde</li>
-                            <li style="padding: 8px 0; color: var(--color-gray);">✓ Fonctionne hors ligne</li>
-                            <li style="padding: 8px 0; color: var(--color-gray);">✓ Aucun impact sur les performances</li>
-                        </ul>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">🔐</div>
-                        <h3>Confidentialité Absolue</h3>
-                        <ul style="list-style: none; padding: 0; margin-top: 16px;">
-                            <li style="padding: 8px 0; color: var(--color-gray);">✓ Analyse 100% locale</li>
-                            <li style="padding: 8px 0; color: var(--color-gray);">✓ Aucune donnée envoyée au cloud</li>
-                            <li style="padding: 8px 0; color: var(--color-gray);">✓ Privacy-by-Design certifié</li>
-                            <li style="padding: 8px 0; color: var(--color-gray);">✓ Conformité RGPD totale</li>
-                        </ul>
-                    </div>
-                    <div class="feature-card">
-                        <div class="feature-icon">💡</div>
-                        <h3>IA Explicable (XAI)</h3>
-                        <p style="margin-top: 16px; color: var(--color-gray); line-height: 1.7;">
-                            Chaque alerte est accompagnée d'une explication claire : pourquoi c'est dangereux, quel est le risque, et quelle action prendre. Transparence totale sur nos décisions.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="tech-summary">
-                    <div class="tech-summary-header">
-                        <h3>Fiche Technique CyberSentinel</h3>
-                    </div>
-                    <div class="tech-summary-body">
-                        <div class="tech-row">
-                            <div class="tech-label">Mission</div>
-                            <div class="tech-value">Protéger les utilisateurs contre les fraudes numériques par détection IA en temps réel</div>
-                        </div>
-                        <div class="tech-row">
-                            <div class="tech-label">Données analysées</div>
-                            <div class="tech-value">URLs, e-mails (corps, en-têtes, liens), domaines, certificats SSL</div>
-                        </div>
-                        <div class="tech-row">
-                            <div class="tech-label">Méthode</div>
-                            <div class="tech-value">Machine Learning supervisé (Classification multi-classes)</div>
-                        </div>
-                        <div class="tech-row">
-                            <div class="tech-label">Précision</div>
-                            <div class="tech-value">≈ 99% (validé sur millions d'exemples)</div>
-                        </div>
-                        <div class="tech-row">
-                            <div class="tech-label">Architecture</div>
-                            <div class="tech-value">Analyse locale, zero-cloud, privacy-by-design</div>
-                        </div>
-                        <div class="tech-row">
-                            <div class="tech-label">Valeur ajoutée</div>
-                            <div class="tech-value">Protection comportementale instantanée, explicable et sans compromis sur la confidentialité</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="evolutions" style="background: var(--color-light);">
-            <div class="container">
-                <div class="section-header">
-                    <div class="section-badge">Écosystème</div>
-                    <h2 class="section-title">Une protection qui s'adapte à votre environnement</h2>
-                    <p class="section-description">
-                        CyberSentinel s'intègre naturellement dans vos outils quotidiens pour une protection invisible mais toujours active.
-                    </p>
-                </div>
-
-                <div class="roadmap-grid">
-                    <div class="roadmap-item">
-                        <div class="roadmap-icon">🌐</div>
-                        <div class="roadmap-content">
-                            <h4>Extension Navigateur (Chrome, Firefox, Edge)</h4>
-                            <p>Détection en temps réel avant même le chargement de la page. Protection automatique sur tous les sites visités.</p>
-                        </div>
-                    </div>
-                    <div class="roadmap-item">
-                        <div class="roadmap-icon">✉️</div>
-                        <div class="roadmap-content">
-                            <h4>Plugin E-mail (Outlook, Gmail, Thunderbird)</h4>
-                            <p>Alerte de phishing intégrée directement dans votre interface mail. Analyse instantanée de chaque message reçu.</p>
-                        </div>
-                    </div>
-                    <div class="roadmap-item">
-                        <div class="roadmap-icon">📱</div>
-                        <div class="roadmap-content">
-                            <h4>Application Mobile (iOS & Android)</h4>
-                            <p>Protection sur smartphone : filtrage des liens malveillants reçus par SMS, WhatsApp, ou réseaux sociaux.</p>
-                        </div>
-                    </div>
-                    <div class="roadmap-item">
-                        <div class="roadmap-icon">📈</div>
-                        <div class="roadmap-content">
-                            <h4>Console Entreprise (SaaS)</h4>
-                            <p>Dashboard centralisé pour monitorer la sécurité comportementale de toute votre organisation en temps réel.</p>
-                        </div>
-                    </div>
-                    <div class="roadmap-item">
-                        <div class="roadmap-icon">🔌</div>
-                        <div class="roadmap-content">
-                            <h4>API & Intégrations</h4>
-                            <p>Intégrez CyberSentinel à vos systèmes existants : SIEM, SOC, outils de ticketing, plateformes de formation.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="cta-section" id="contact">
-            <div class="container">
-                <div class="cta-content">
-                    <h2 class="section-title">Prêt à protéger votre couche humaine ?</h2>
-                    <p class="section-description">
-                        Découvrez comment CyberSentinel peut bloquer les 90% d'attaques que vos solutions actuelles laissent passer.
-                    </p>
-                    <a href="mailto:contact@cosegi.be" class="btn-large btn-primary-large">
-                        Demander une démonstration →
-                    </a>
-                </div>
-            </div>
-        </section>
-    </main>
-
-   <footer>
+    <section id="presentation">
         <div class="container">
-            <div class="footer-content">
-                <div class="footer-brand">
-                    <div class="footer-logo">Cosegi</div>
-                    <p class="footer-tagline">
-                        La cybersécurité prédictive et comportementale.<br>
-                        Protéger l'humain au cœur du numérique.
-                    </p>
+            <h2>Une Innovation Révolutionnaire</h2>
+            <p style="text-align: center; font-size: 1.2em; color: #666; max-width: 800px; margin: 0 auto 60px;">
+                CleanGest combine robotique avancée et capture gestuelle pour automatiser vos tâches de nettoyage. 
+                Enregistrez vos mouvements une seule fois, et laissez le robot les reproduire avec précision.
+            </p>
+
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h3>Robot Autonome</h3>
+                    <p>Base mobile motorisée avec bras robotique 5 DOF capable d'exécuter des trajectoires complexes avec précision.</p>
                 </div>
-                <div class="footer-section">
-                    <h4>Solution</h4>
-                    <ul class="footer-links">
-                        <li><a href="#fonctionnement">Fonctionnement</a></li>
-                        <li><a href="RGPD.html">Confidentialité</a></li>
-                        <li><a href="#evolutions">Intégrations</a></li>
-                        <li><a href="#contact">Demander une démo</a></li>
-                    </ul>
+                <div class="feature-card">
+                    <div class="feature-icon">🧤</div>
+                    <h3>Capture Gestuelle</h3>
+                    <p>Gant équipé de capteurs IMU et système de vision double caméra pour un suivi 3D ultra-précis de vos mouvements.</p>
                 </div>
-                <div class="footer-section">
-                    <h4>Entreprise</h4>
-                    <ul class="footer-links">
-                        <li><a href="a-propos.html">À propos</a></li>
-                        <li><a href="#histoire">Histoire</a></li>
-                        <li><a href="#contact">Contact</a></li> </ul>
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Reproduction Fidèle</h3>
+                    <p>Algorithmes avancés de fusion de données pour reproduire exactement vos gestes avec une précision millimétrique.</p>
                 </div>
-                <div class="footer-section">
-                    <h4>Ressources</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Documentation</a></li>
-                        
-                        <li><a href="#">Support</a></li>
-                        <li><a href="RGPD.html">Politique de confidentialité</a></li>
-                    </ul>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>© 2025 Cosegi. Tous droits réservés.</p>
             </div>
         </div>
+    </section>
+
+    <section id="fonctionnement">
+        <div class="container">
+            <h2>Comment Ça Fonctionne</h2>
+            
+            <div class="process-timeline">
+                <div class="timeline-item">
+                    <div class="timeline-number">1</div>
+                    <div class="timeline-content">
+                        <h3>Enregistrement Gestuel</h3>
+                        <p>Enfilez le gant équipé de capteurs IMU. Les deux webcams et les capteurs inertiels capturent simultanément la position et l'orientation de votre main en 3D pendant que vous effectuez le geste de nettoyage.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-number">2</div>
+                    <div class="timeline-content">
+                        <h3>Traitement et Fusion</h3>
+                        <p>L'Arduino collecte les données des IMU tandis que le système informatique fusionne les informations de vision et d'orientation pour créer une trajectoire 3D précise, compensant la dérive des capteurs.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-number">3</div>
+                    <div class="timeline-content">
+                        <h3>Stockage de la Trajectoire</h3>
+                        <p>La trajectoire complète (position, orientation, timing) est sauvegardée dans un format exploitable, prête à être reproduite à tout moment par le robot.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="timeline-number">4</div>
+                    <div class="timeline-content">
+                        <h3>Reproduction Autonome</h3>
+                        <p>Le robot mobile se positionne automatiquement, puis son bras robotique équipé d'une éponge reproduit fidèlement les mouvements enregistrés, garantissant un nettoyage identique à chaque fois.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="architecture">
+        <div class="container">
+            <h2>Architecture Technique</h2>
+            
+            <div class="tech-specs">
+                <div class="spec-item">
+                    <h4>🧤 Gant de Capture</h4>
+                    <ul>
+                        <li>Capteurs IMU multi-axes</li>
+                        <li>Mesure d'orientation haute précision</li>
+                        <li>Calibration automatique</li>
+                        <li>Transmission sans fil</li>
+                    </ul>
+                </div>
+
+                <div class="spec-item">
+                    <h4>📹 Système de Vision</h4>
+                    <ul>
+                        <li>Deux webcams stéréoscopiques</li>
+                        <li>Reconstruction 3D en temps réel</li>
+                        <li>Suivi markerless ou avec marqueurs</li>
+                        <li>Compensation de la dérive IMU</li>
+                    </ul>
+                </div>
+
+                <div class="spec-item">
+                    <h4>🔧 Contrôle Arduino</h4>
+                    <ul>
+                        <li>Collecte des données IMU</li>
+                        <li>Synchronisation multi-capteurs</li>
+                        <li>Interface avec système de vision</li>
+                        <li>Communication série optimisée</li>
+                    </ul>
+                </div>
+
+                <div class="spec-item">
+                    <h4>💻 Traitement Données</h4>
+                    <ul>
+                        <li>Fusion IMU/Vision robuste</li>
+                        <li>Calibration des référentiels</li>
+                        <li>Interpolation de trajectoires</li>
+                        <li>Stockage et récupération</li>
+                    </ul>
+                </div>
+
+                <div class="spec-item">
+                    <h4>🤖 Robot Mobile</h4>
+                    <ul>
+                        <li>Plateforme motorisée autonome</li>
+                        <li>Bras robotique 5 DOF</li>
+                        <li>Asservissement haute précision</li>
+                        <li>Détection d'obstacles</li>
+                    </ul>
+                </div>
+
+                <div class="spec-item">
+                    <h4>🛡️ Sécurité</h4>
+                    <ul>
+                        <li>Arrêt d'urgence automatique</li>
+                        <li>Vérification de trajectoire</li>
+                        <li>Mode simulation/test</li>
+                        <li>Protocoles de sécurité</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 80px; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 50px; border-radius: 15px;">
+                <h3 style="color: #667eea; text-align: center; font-size: 1.8em; margin-bottom: 30px;">Applications et Perspectives</h3>
+                <p style="color: #555; line-height: 1.8; text-align: center; max-width: 800px; margin: 0 auto;">
+                    Au-delà du nettoyage domestique, CleanGest ouvre la voie à de nombreuses applications : 
+                    télé-opération à distance, assistance pour personnes à mobilité réduite, automatisation de tâches 
+                    industrielles répétitives, formation gestuelle, et bien plus encore. Le système est conçu pour 
+                    être évolutif et adaptable à divers secteurs.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="cta-section">
+        <div class="container">
+            <h2>Intéressé par le Projet ?</h2>
+            <p>Rejoignez l'innovation en robotique domestique et industrielle</p>
+            <a href="mailto:contact@cleangest.com" class="btn">Nous Contacter</a>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 CleanGest - Tous droits réservés | Robot de Nettoyage par Capture Gestuelle</p>
+        </div>
     </footer>
+
     <script>
-        // Menu mobile toggle
-        function toggleMenu() {
-            const nav = document.getElementById('nav');
-            nav.classList.toggle('active');
-        }
-
-        // Header scroll effect
-        window.addEventListener('scroll', function() {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-
-        // Close mobile menu when clicking on a link
-        document.querySelectorAll('nav a').forEach(link => {
-            link.addEventListener('click', function() {
-                const nav = document.getElementById('nav');
-                nav.classList.remove('active');
-            });
-        });
-
-        // Smooth scroll animation for internal links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        // Smooth scrolling pour la navigation
+        document.querySelectorAll('nav a').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    const headerOffset = 80;
-                    const elementPosition = target.getBoundingClientRect().top;
-                    const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-                    window.scrollTo({
-                        top: offsetPosition,
-                        behavior: 'smooth'
-                    });
-                }
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
             });
         });
-    </script>
 
+        // Animation au scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.feature-card, .timeline-item, .spec-item').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+    </script>
 </body>
 </html>
